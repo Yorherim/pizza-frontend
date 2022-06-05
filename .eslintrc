@@ -23,7 +23,9 @@
 				"printWidth": 100,
 				"endOfLine": "auto"
 			}
-		]
+		],
+		"react/jsx-no-comment-textnodes": "off",
+		"jsx-a11y/anchor-is-valid": "off"
 	},
 	"extends": [
 		"eslint:recommended",
