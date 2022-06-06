@@ -52,9 +52,13 @@ body {
 	background-color: #ffdf8c;
 }
 
-.container {
+.wrapper {
 	margin: 55px 60px;
 	background-color: #fff;
 	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.03);
 	border-radius: 10px;
+}
+
+.container {
+	padding: 0 55px;
 }

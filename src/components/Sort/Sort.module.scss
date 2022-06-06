@@ -1,0 +1,58 @@
+.sort {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	cursor: pointer;
+	position: relative;
+
+	&__arrow {
+		width: 0;
+		height: 0;
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		border-bottom: 8px solid #2c2c2c;
+
+		&_active {
+			transform: rotate(180deg);
+		}
+	}
+
+	&__text {
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 17px;
+		letter-spacing: 0.015em;
+	}
+
+	&__orange {
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 17px;
+		letter-spacing: 0.015em;
+		color: #fe5f1e;
+		border-bottom: 2px dashed #fe5f1e;
+	}
+
+	&__modal {
+		display: flex;
+		flex-direction: column;
+		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+		border-radius: 10px;
+		padding: 13px 0;
+		position: absolute;
+		right: 0;
+		top: 40px;
+		z-index: 10;
+
+		background-color: #fff;
+	}
+
+	&__item {
+		padding: 10px 22px 10px 14px;
+
+		&_active {
+			background: rgba(254, 95, 30, 0.05);
+			color: #fe5f1e;
+		}
+	}
+}
