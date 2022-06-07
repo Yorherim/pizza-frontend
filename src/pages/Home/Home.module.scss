@@ -4,5 +4,28 @@
 	.sorting {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 32px;
 	}
+
+	.pizzas {
+		&__wrapper {
+			display: flex;
+			justify-content: space-between;
+			gap: 65px 35px;
+			flex-wrap: wrap;
+		}
+
+		&__title {
+			font-weight: 700;
+			font-size: 32px;
+			line-height: 39px;
+			letter-spacing: 0.01em;
+			margin-bottom: 35px;
+		}
+	}
+}
+
+.line {
+	height: 1px;
+	background-color: #f7f7f7;
 }
