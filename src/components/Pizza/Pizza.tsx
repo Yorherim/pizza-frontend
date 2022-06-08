@@ -32,7 +32,7 @@ export const Pizza: React.FC<PizzaPropsType> = ({
 
 	return (
 		<div className={styles.pizza}>
-			<img src="/assets/img/image 2.jpg" className={styles.pizza__img} />
+			<img src={imgUrl} className={styles.pizza__img} />
 			<span className={styles.pizza__title}>{title}</span>
 			<div className={styles.pizza__tabs}>
 				<div className={styles.pizza__box}>

@@ -1,0 +1,87 @@
+.pizzaCart {
+	border-top: 1px solid #f4f4f4;
+
+	&__body {
+		margin: 30px 0;
+		display: flex;
+		justify-content: space-between;
+
+		.pizza {
+			display: flex;
+			align-items: center;
+			gap: 15px;
+
+			&__img {
+				width: 80px;
+				height: 80px;
+			}
+
+			&__text {
+				display: flex;
+				flex-direction: column;
+				gap: 3px;
+			}
+
+			&__title {
+				font-weight: 700;
+				font-size: 22px;
+				line-height: 27px;
+				letter-spacing: 0.01em;
+				color: #000000;
+			}
+
+			&__description {
+				font-weight: 400;
+				font-size: 18px;
+				line-height: 22px;
+				letter-spacing: 0.01em;
+				color: #8d8d8d;
+			}
+
+			&__functions {
+				display: flex;
+				align-items: center;
+				gap: 93px;
+
+				.button {
+					width: 32px;
+					height: 32px;
+					border-radius: 100%;
+					background-color: #fff;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					cursor: pointer;
+				}
+
+				.addButtons {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					gap: 12px;
+
+					&__button {
+						border: 1px solid #fe5f1e;
+					}
+				}
+
+				.price {
+					font-weight: 700;
+					font-size: 22px;
+					line-height: 27px;
+					letter-spacing: 0.01em;
+					color: #000000;
+				}
+
+				.clear {
+					border: 1px solid #d0d0d0;
+
+					svg {
+						fill: #d0d0d0;
+						transform: rotate(45deg);
+					}
+				}
+			}
+		}
+	}
+}
