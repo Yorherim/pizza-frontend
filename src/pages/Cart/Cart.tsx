@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { CartEmpty, PizzaCart } from '../../components';
 
 import styles from './Cart.module.scss';
-import { ArrowIcon, CartBlackIcon, TrashIcon } from './icons';
+
+import { CartBlackIcon, ArrowIcon, TrashIcon } from '../../assets/icons';
+import { CartEmpty, PizzaCart } from '../../components';
 
 export const CartPage: React.FC = () => {
 	const [empty, setEmpty] = useState(true);
@@ -11,16 +12,16 @@ export const CartPage: React.FC = () => {
 	return (
 		<main className={styles.cart}>
 			<div className="container">
-				{!empty ? (
+				{empty ? (
 					<div className={styles.cart__inner}>
 						<div className={styles.cart__top}>
 							<div className={styles.cart__top_left}>
-								<CartBlackIcon />
+								<img src={CartBlackIcon} alt="black cart icon" />
 								<h2 className={styles.cart__title}>Корзина</h2>
 							</div>
 
 							<div className={styles.cart__clear}>
-								<TrashIcon />
+								<img src={TrashIcon} alt="trash icon" />
 								Очистить корзину
 							</div>
 						</div>
@@ -46,7 +47,7 @@ export const CartPage: React.FC = () => {
 										styles.buttons__button_gray,
 									)}
 								>
-									<ArrowIcon />
+									<img src={ArrowIcon} alt="arrow icon" />
 									Вернуться назад
 								</button>
 								<button

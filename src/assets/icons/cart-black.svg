@@ -1,8 +1,4 @@
-import React from 'react';
-
-export const CartBlackIcon: React.FC = () => {
-	return (
-		<svg
+<svg
 			width="29"
 			height="29"
 			viewBox="0 0 31 31"
@@ -31,5 +27,3 @@ export const CartBlackIcon: React.FC = () => {
 				strokeLinejoin="round"
 			/>
 		</svg>
-	);
-};

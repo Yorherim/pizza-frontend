@@ -2,8 +2,7 @@ import React from 'react';
 
 import styles from './Header.module.scss';
 
-//import LogoIcon from '../../../public/assets/svg/logo.svg';
-//import CartIcon from '../../../public/assets/svg/cart.svg';
+import { LogoIcon, CartIcon } from '../../assets/icons';
 
 export const Header: React.FC = () => {
 	return (
@@ -11,7 +10,7 @@ export const Header: React.FC = () => {
 			<div className="container">
 				<header className={styles.header}>
 					<div className={styles.logo}>
-						<img src="/assets/svg/logo.svg" alt="logo" />
+						<img src={LogoIcon} alt="logo" />
 						<div className={styles.logo__text}>
 							<h2 className={styles.logo__title}>REACT PIZZA</h2>
 							<span className={styles.logo__description}>
@@ -24,7 +23,7 @@ export const Header: React.FC = () => {
 						<div className={styles.button__left}>520 ₽</div>
 						<div className={styles.line}></div>
 						<div className={styles.button__right}>
-							<img src="/assets/svg/cart.svg" alt="cart" /> 3
+							<img src={CartIcon} alt="cart" /> 3
 						</div>
 					</a>
 				</header>

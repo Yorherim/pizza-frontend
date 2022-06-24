@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import styles from './Categories.module.scss';
+
 import { Category } from './Category/Category';
 
 const listOfCategories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];

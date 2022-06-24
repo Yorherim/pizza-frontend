@@ -1,9 +1,10 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import styles from './Home.module.scss';
 
+import { Cheese } from '../../assets/img/pizzas';
 import { Categories, Pizza, Sort } from '../../components';
-import clsx from 'clsx';
 
 export const HomePage: React.FC = () => {
 	return (
@@ -18,7 +19,7 @@ export const HomePage: React.FC = () => {
 					<h2 className={styles.pizzas__title}>Все пиццы</h2>
 					<div className={styles.pizzas__wrapper}>
 						<Pizza
-							imgUrl="/assets/img/cheese.png"
+							imgUrl={Cheese}
 							title="Чизбургер-пицца"
 							count={0}
 							sizes={{ 25: true, 30: true, 35: true }}
@@ -26,7 +27,7 @@ export const HomePage: React.FC = () => {
 							traditionWidth={true}
 						/>
 						<Pizza
-							imgUrl="/assets/img/cheese.png"
+							imgUrl={Cheese}
 							title="Чизбургер-пицца"
 							count={0}
 							sizes={{ 25: true, 30: true, 35: true }}
@@ -34,7 +35,7 @@ export const HomePage: React.FC = () => {
 							traditionWidth={true}
 						/>
 						<Pizza
-							imgUrl="/assets/img/cheese.png"
+							imgUrl={Cheese}
 							title="Чизбургер-пицца"
 							count={0}
 							sizes={{ 25: true, 30: true, 35: true }}
@@ -42,7 +43,7 @@ export const HomePage: React.FC = () => {
 							traditionWidth={true}
 						/>
 						<Pizza
-							imgUrl="/assets/img/cheese.png"
+							imgUrl={Cheese}
 							title="Чизбургер-пицца"
 							count={0}
 							sizes={{ 25: true, 30: true, 35: true }}
@@ -50,7 +51,15 @@ export const HomePage: React.FC = () => {
 							traditionWidth={true}
 						/>
 						<Pizza
-							imgUrl="/assets/img/cheese.png"
+							imgUrl={Cheese}
+							title="Чизбургер-пицца"
+							count={0}
+							sizes={{ 25: true, 30: true, 35: true }}
+							prise={395}
+							traditionWidth={true}
+						/>
+						<Pizza
+							imgUrl={Cheese}
 							title="Чизбургер-пицца"
 							count={0}
 							sizes={{ 25: true, 30: true, 35: true }}

@@ -82,6 +82,15 @@ export const Pizza: React.FC<PizzaPropsType> = ({
 					>
 						35 см.
 					</button>
+					<button
+						className={clsx(styles.pizza__tab, styles.pizza__tab_size, {
+							[styles.pizza__tab_active]: activeSize === 35,
+							[styles.pizza__tab_disable]: !sizes[35],
+						})}
+						onClick={() => setActiveSize(35)}
+					>
+						40 см.
+					</button>
 				</div>
 			</div>
 
