@@ -6,7 +6,7 @@ import styles from './PizzaButton.module.scss';
 import { PlusIcon } from '../../../assets/icons/components-icons/PlusIcon';
 
 type PizzaButtonPropsType = {
-	count: number;
+	count?: number;
 };
 
 export const PizzaButton: React.FC<PizzaButtonPropsType> = ({ count }) => {
@@ -20,9 +20,15 @@ export const PizzaButton: React.FC<PizzaButtonPropsType> = ({ count }) => {
 		>
 			<PlusIcon />
 			Добавить
-			<div className={clsx(styles.button__circle, { [styles.button__circle_hover]: hover })}>
-				{count}
-			</div>
+			{count && (
+				<div
+					className={clsx(styles.button__circle, {
+						[styles.button__circle_hover]: hover,
+					})}
+				>
+					{count}
+				</div>
+			)}
 		</button>
 	);
 };

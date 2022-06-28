@@ -5,6 +5,7 @@ import styles from './Home.module.scss';
 
 import { Cheese } from '../../assets/img/pizzas';
 import { Categories, Pizza, Sort } from '../../components';
+import pizzas from '../../assets/pizzas.json';
 
 export const HomePage: React.FC = () => {
 	return (
@@ -18,7 +19,10 @@ export const HomePage: React.FC = () => {
 				<div className={styles.pizzas}>
 					<h2 className={styles.pizzas__title}>Все пиццы</h2>
 					<div className={styles.pizzas__wrapper}>
-						<Pizza
+						{pizzas.map((pizza) => (
+							<Pizza key={pizza.id} {...pizza} />
+						))}
+						{/* <Pizza
 							imgUrl={Cheese}
 							title="Чизбургер-пицца"
 							count={0}
@@ -65,7 +69,7 @@ export const HomePage: React.FC = () => {
 							sizes={{ 25: true, 30: true, 35: true }}
 							prise={395}
 							traditionWidth={true}
-						/>
+						/> */}
 					</div>
 				</div>
 			</div>
