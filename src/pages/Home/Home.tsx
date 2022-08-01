@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 import styles from './Home.module.scss';
@@ -6,8 +6,29 @@ import styles from './Home.module.scss';
 import { Cheese } from '../../assets/img/pizzas';
 import { Categories, Pizza, Sort } from '../../components';
 import pizzas from '../../assets/pizzas.json';
+import axios from 'axios';
+
+type PizzaType = {
+	id: string;
+	title: string;
+	widths: (0 | 1)[];
+	sizes: (25 | 30 | 35)[];
+	price: number;
+	img: string;
+};
 
 export const HomePage: React.FC = () => {
+	const [pizzas, setPizzas] = useState([] as PizzaType[]);
+
+	useEffect(() => {
+		(async () => {
+			const pizzas: PizzaType[] = await (
+				await axios.get(`${process.env.REACT_APP_API_URL}`)
+			).data;
+			setPizzas(pizzas);
+		})();
+	}, []);
+
 	return (
 		<main className={styles.body}>
 			<div className="container">
@@ -22,54 +43,6 @@ export const HomePage: React.FC = () => {
 						{pizzas.map((pizza) => (
 							<Pizza key={pizza.id} {...pizza} />
 						))}
-						{/* <Pizza
-							imgUrl={Cheese}
-							title="Чизбургер-пицца"
-							count={0}
-							sizes={{ 25: true, 30: true, 35: true }}
-							prise={395}
-							traditionWidth={true}
-						/>
-						<Pizza
-							imgUrl={Cheese}
-							title="Чизбургер-пицца"
-							count={0}
-							sizes={{ 25: true, 30: true, 35: true }}
-							prise={395}
-							traditionWidth={true}
-						/>
-						<Pizza
-							imgUrl={Cheese}
-							title="Чизбургер-пицца"
-							count={0}
-							sizes={{ 25: true, 30: true, 35: true }}
-							prise={395}
-							traditionWidth={true}
-						/>
-						<Pizza
-							imgUrl={Cheese}
-							title="Чизбургер-пицца"
-							count={0}
-							sizes={{ 25: true, 30: true, 35: true }}
-							prise={395}
-							traditionWidth={true}
-						/>
-						<Pizza
-							imgUrl={Cheese}
-							title="Чизбургер-пицца"
-							count={0}
-							sizes={{ 25: true, 30: true, 35: true }}
-							prise={395}
-							traditionWidth={true}
-						/>
-						<Pizza
-							imgUrl={Cheese}
-							title="Чизбургер-пицца"
-							count={0}
-							sizes={{ 25: true, 30: true, 35: true }}
-							prise={395}
-							traditionWidth={true}
-						/> */}
 					</div>
 				</div>
 			</div>
