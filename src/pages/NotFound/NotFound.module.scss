@@ -1,0 +1,19 @@
+.message {
+	margin: 0 auto;
+	max-width: 400px;
+	text-align: center;
+	font-size: 35px;
+	padding: 55px 0 55px;
+
+	.title {
+		margin-top: 15px;
+	}
+
+	.text {
+		margin-top: 15px;
+		font-size: 18px;
+		font-weight: 400;
+		letter-spacing: 0.015em;
+		line-height: 23px;
+	}
+}

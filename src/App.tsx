@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { HeaderLayout } from './layouts/HeaderLayout';
-import { HomePage, CartPage } from './pages';
+import { HomePage, CartPage, NotFoundPage } from './pages';
 
 const App: React.FC = () => {
 	return (
@@ -11,7 +11,7 @@ const App: React.FC = () => {
 				<Route path="/" element={<HeaderLayout />}>
 					<Route index element={<HomePage />} />
 					<Route path="cart" element={<CartPage />} />
-					<Route path="*" element={<h1>404: PAGE NOT FOUND</h1>} />
+					<Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>
 		</div>

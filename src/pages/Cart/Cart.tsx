@@ -5,14 +5,15 @@ import styles from './Cart.module.scss';
 
 import { CartBlackIcon, ArrowIcon, TrashIcon } from '../../assets/icons';
 import { CartEmpty, PizzaCart } from '../../components';
+import { Link } from 'react-router-dom';
 
 export const CartPage: React.FC = () => {
-	const [empty, setEmpty] = useState(true);
+	const [empty, setEmpty] = useState(false);
 
 	return (
 		<main className={styles.cart}>
 			<div className="container">
-				{empty ? (
+				{!empty ? (
 					<div className={styles.cart__inner}>
 						<div className={styles.cart__top}>
 							<div className={styles.cart__top_left}>
@@ -41,7 +42,8 @@ export const CartPage: React.FC = () => {
 								</div>
 							</div>
 							<div className={styles.buttons}>
-								<button
+								<Link
+									to="/"
 									className={clsx(
 										styles.buttons__button,
 										styles.buttons__button_gray,
@@ -49,7 +51,7 @@ export const CartPage: React.FC = () => {
 								>
 									<img src={ArrowIcon} alt="arrow icon" />
 									Вернуться назад
-								</button>
+								</Link>
 								<button
 									className={clsx(
 										styles.buttons__button,

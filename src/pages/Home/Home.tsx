@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import axios from 'axios';
 
 import styles from './Home.module.scss';
 
-import { Cheese } from '../../assets/img/pizzas';
-import { Categories, Pizza, Sort } from '../../components';
-import pizzas from '../../assets/pizzas.json';
-import axios from 'axios';
+import { Categories, Pizza, Sort, PizzaSkeleton } from '../../components';
 
 type PizzaType = {
 	id: string;
@@ -40,9 +38,9 @@ export const HomePage: React.FC = () => {
 				<div className={styles.pizzas}>
 					<h2 className={styles.pizzas__title}>Все пиццы</h2>
 					<div className={styles.pizzas__wrapper}>
-						{pizzas.map((pizza) => (
-							<Pizza key={pizza.id} {...pizza} />
-						))}
+						{pizzas.length
+							? pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)
+							: [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />)}
 					</div>
 				</div>
 			</div>
