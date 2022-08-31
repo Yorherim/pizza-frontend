@@ -2,8 +2,8 @@ import React from 'react';
 
 import styles from './Header.module.scss';
 
-import { LogoIcon, CartIcon } from '../../assets/icons';
 import { Link } from 'react-router-dom';
+import { CartIcon, LogoIcon } from '../icons';
 
 export const Header: React.FC = () => {
 	return (
@@ -11,12 +11,10 @@ export const Header: React.FC = () => {
 			<div className="container">
 				<header className={styles.header}>
 					<Link to="/" className={styles.logo}>
-						<img src={LogoIcon} alt="logo" />
+						<LogoIcon />
 						<div className={styles.logo__text}>
 							<h2 className={styles.logo__title}>REACT PIZZA</h2>
-							<span className={styles.logo__description}>
-								самая вкусная пицца во вселенной
-							</span>
+							<span className={styles.logo__description}>самая вкусная пицца во вселенной</span>
 						</div>
 					</Link>
 
@@ -24,7 +22,7 @@ export const Header: React.FC = () => {
 						<div className={styles.button__left}>520 ₽</div>
 						<div className={styles.line}></div>
 						<div className={styles.button__right}>
-							<img src={CartIcon} alt="cart" /> 3
+							<CartIcon />
 						</div>
 					</Link>
 				</header>

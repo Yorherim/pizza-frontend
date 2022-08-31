@@ -1,17 +1,17 @@
 .category {
-	font-weight: 700;
-	font-size: 16px;
-	line-height: 19px;
-	text-align: center;
-	letter-spacing: 0.015em;
-	background-color: #f9f9f9;
 	padding: 10px 25px;
-	border-radius: 30px;
 	cursor: pointer;
 	transition: 0.2s ease-in-out;
+	text-align: center;
+	letter-spacing: 0.015em;
+	border-radius: 30px;
+	background-color: #f9f9f9;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 19px;
 
 	&__active {
+		color: #fff;
 		background-color: #282828;
-		color: #ffffff;
 	}
 }

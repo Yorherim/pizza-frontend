@@ -1,9 +1,9 @@
 .message {
-	margin: 0 auto;
 	max-width: 400px;
+	margin: 0 auto;
+	padding: 55px 0;
 	text-align: center;
 	font-size: 35px;
-	padding: 55px 0 55px;
 
 	.title {
 		margin-top: 15px;
@@ -11,9 +11,9 @@
 
 	.text {
 		margin-top: 15px;
+		letter-spacing: 0.015em;
 		font-size: 18px;
 		font-weight: 400;
-		letter-spacing: 0.015em;
 		line-height: 23px;
 	}
 }

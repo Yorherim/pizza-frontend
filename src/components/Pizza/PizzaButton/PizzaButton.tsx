@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import React, { useState } from 'react';
+import { PlusIcon } from '../../icons';
 
 import styles from './PizzaButton.module.scss';
-
-import { PlusIcon } from '../../../assets/icons/components-icons/PlusIcon';
 
 type PizzaButtonPropsType = {
 	count?: number;

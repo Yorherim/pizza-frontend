@@ -1,16 +1,16 @@
 .sort {
+	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 7px;
 	cursor: pointer;
-	position: relative;
+	gap: 7px;
 
 	&__arrow {
 		width: 0;
 		height: 0;
-		border-left: 6px solid transparent;
 		border-right: 6px solid transparent;
 		border-bottom: 8px solid #2c2c2c;
+		border-left: 6px solid transparent;
 
 		&_active {
 			transform: rotate(180deg);
@@ -18,42 +18,41 @@
 	}
 
 	&__text {
-		font-weight: 700;
-		font-size: 14px;
-		line-height: 17px;
-		letter-spacing: 0.015em;
 		flex-shrink: 0;
+		letter-spacing: 0.015em;
+		font-size: 14px;
+		font-weight: 700;
+		line-height: 17px;
 	}
 
 	&__orange {
-		font-weight: 400;
-		font-size: 14px;
-		line-height: 17px;
 		letter-spacing: 0.015em;
 		color: #fe5f1e;
 		border-bottom: 2px dashed #fe5f1e;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 17px;
 	}
 
 	&__modal {
+		position: absolute;
+		z-index: 10;
+		top: 40px;
+		right: 0;
 		display: flex;
 		flex-direction: column;
-		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
-		border-radius: 10px;
 		padding: 13px 0;
-		position: absolute;
-		right: 0;
-		top: 40px;
-		z-index: 10;
-
+		border-radius: 10px;
 		background-color: #fff;
+		box-shadow: 0 5px 15px rgb(0 0 0 / 9%);
 	}
 
 	&__item {
 		padding: 10px 22px 10px 14px;
 
 		&_active {
-			background: rgba(254, 95, 30, 0.05);
 			color: #fe5f1e;
+			background: rgb(254 95 30 / 5%);
 		}
 	}
 }

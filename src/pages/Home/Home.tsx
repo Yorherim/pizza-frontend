@@ -20,9 +20,7 @@ export const HomePage: React.FC = () => {
 
 	useEffect(() => {
 		(async () => {
-			const pizzas: PizzaType[] = await (
-				await axios.get(`${process.env.REACT_APP_API_URL}`)
-			).data;
+			const pizzas: PizzaType[] = await (await axios.get(`${process.env.REACT_APP_API_URL}`)).data;
 			setPizzas(pizzas);
 		})();
 	}, []);

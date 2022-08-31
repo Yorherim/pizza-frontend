@@ -1,10 +1,9 @@
-<svg
-			width="29"
-			height="29"
-			viewBox="0 0 31 31"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+import React from 'react';
+import { IconType } from './types';
+
+export const CartBlackIcon: React.FC<IconType> = ({ fill = 'none' }) => {
+	return (
+		<svg width="29" height="29" viewBox="0 0 31 31" fill={fill} xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M10.6667 28.7917C12.0014 28.7917 13.0833 27.7097 13.0833 26.375C13.0833 25.0403 12.0014 23.9583 10.6667 23.9583C9.33198 23.9583 8.25 25.0403 8.25 26.375C8.25 27.7097 9.33198 28.7917 10.6667 28.7917Z"
 				stroke="#3F3F3F"
@@ -27,3 +26,5 @@
 				strokeLinejoin="round"
 			/>
 		</svg>
+	);
+};

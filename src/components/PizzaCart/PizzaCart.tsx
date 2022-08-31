@@ -4,9 +4,7 @@ import clsx from 'clsx';
 import styles from './PizzaCart.module.scss';
 
 import PizzaCheeseChiken from '../../assets/img/pizzas/cheese-chiken.png';
-
-import { PlusIcon } from '../../assets/icons/components-icons/PlusIcon';
-import { MinusIcon } from '../../assets/icons';
+import { MinusIcon, PlusIcon } from '../icons';
 
 export const PizzaCart: React.FC = () => {
 	return (
@@ -23,7 +21,7 @@ export const PizzaCart: React.FC = () => {
 				<div className={styles.pizza__functions}>
 					<div className={styles.addButtons}>
 						<button className={clsx(styles.button, styles.addButtons__button)}>
-							<img src={MinusIcon} alt="minus icon" />
+							<MinusIcon />
 						</button>
 						Добавить
 						<button className={clsx(styles.button, styles.addButtons__button)}>

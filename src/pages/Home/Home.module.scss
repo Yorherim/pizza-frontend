@@ -10,17 +10,21 @@
 	.pizzas {
 		&__wrapper {
 			display: flex;
-			// justify-content: space-between;
-			gap: 65px 56px;
 			flex-wrap: wrap;
+			justify-content: space-around;
+			gap: 15px 30px;
+
+			// @media (max-width: 1509px) {
+			// 	justify-content: space-around;
+			// }
 		}
 
 		&__title {
-			font-weight: 700;
-			font-size: 32px;
-			line-height: 39px;
-			letter-spacing: 0.01em;
 			margin-bottom: 35px;
+			letter-spacing: 0.01em;
+			font-size: 32px;
+			font-weight: 700;
+			line-height: 39px;
 		}
 	}
 }

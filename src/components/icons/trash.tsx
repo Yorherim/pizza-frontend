@@ -1,10 +1,9 @@
-<svg
-			width="20"
-			height="20"
-			viewBox="0 0 20 20"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
+import React from 'react';
+import { IconType } from './types';
+
+export const TrashIcon: React.FC<IconType> = ({ fill = 'none' }) => {
+	return (
+		<svg width="20" height="20" viewBox="0 0 20 20" fill={fill} xmlns="http://www.w3.org/2000/svg">
 			<path
 				d="M2.5 5H4.16667H17.5"
 				stroke="#B6B6B6"
@@ -34,3 +33,5 @@
 				strokeLinejoin="round"
 			/>
 		</svg>
+	);
+};

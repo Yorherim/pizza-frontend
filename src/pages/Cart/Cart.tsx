@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 
 import styles from './Cart.module.scss';
 
-import { CartBlackIcon, ArrowIcon, TrashIcon } from '../../assets/icons';
 import { CartEmpty, PizzaCart } from '../../components';
 import { Link } from 'react-router-dom';
+import { ArrowIcon, CartBlackIcon, TrashIcon } from '../../components/icons';
 
 export const CartPage: React.FC = () => {
 	const [empty, setEmpty] = useState(false);
@@ -17,12 +17,12 @@ export const CartPage: React.FC = () => {
 					<div className={styles.cart__inner}>
 						<div className={styles.cart__top}>
 							<div className={styles.cart__top_left}>
-								<img src={CartBlackIcon} alt="black cart icon" />
+								<CartBlackIcon />
 								<h2 className={styles.cart__title}>Корзина</h2>
 							</div>
 
 							<div className={styles.cart__clear}>
-								<img src={TrashIcon} alt="trash icon" />
+								<TrashIcon />
 								Очистить корзину
 							</div>
 						</div>
@@ -42,22 +42,11 @@ export const CartPage: React.FC = () => {
 								</div>
 							</div>
 							<div className={styles.buttons}>
-								<Link
-									to="/"
-									className={clsx(
-										styles.buttons__button,
-										styles.buttons__button_gray,
-									)}
-								>
-									<img src={ArrowIcon} alt="arrow icon" />
+								<Link to="/" className={clsx(styles.buttons__button, styles.buttons__button_gray)}>
+									<ArrowIcon />
 									Вернуться назад
 								</Link>
-								<button
-									className={clsx(
-										styles.buttons__button,
-										styles.buttons__button_orange,
-									)}
-								>
+								<button className={clsx(styles.buttons__button, styles.buttons__button_orange)}>
 									Оплатить сейчас
 								</button>
 							</div>

@@ -15,9 +15,7 @@ export const Sort: React.FC = () => {
 			onClick={() => setActive(!active)}
 			//onBlur={() => setActive(false)}
 		>
-			<div
-				className={clsx(styles.sort__arrow, { [styles.sort__arrow_active]: active })}
-			></div>
+			<div className={clsx(styles.sort__arrow, { [styles.sort__arrow_active]: active })}></div>
 			<span className={styles.sort__text}>Сортировка по:</span>
 			<span className={styles.sort__orange}>{sortBy}</span>
 

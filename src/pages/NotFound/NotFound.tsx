@@ -8,9 +8,7 @@ export const NotFoundPage: React.FC = () => {
 			<div className={styles.message}>
 				<span>😕</span>
 				<h1 className={styles.title}>Ничего не найдено</h1>
-				<h2 className={styles.text}>
-					Данная страница отсутствует в нашем интернет-магазине
-				</h2>
+				<h2 className={styles.text}>Данная страница отсутствует в нашем интернет-магазине</h2>
 			</div>
 		</div>
 	);
