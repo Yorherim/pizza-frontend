@@ -1,0 +1,34 @@
+.tab {
+	padding: 12px 0;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+	text-align: center;
+	letter-spacing: 0.015em;
+	color: #2c2c2c;
+	border-radius: 5px;
+	background-color: #f3f3f3;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 17px;
+
+	&:hover {
+		background: #fdfdfd;
+	}
+
+	&__width {
+		min-width: 131px;
+	}
+
+	&__size {
+		min-width: 86px;
+	}
+}
+
+.active {
+	background: #fff;
+	box-shadow: 0 2px 4px rgb(0 0 0 / 4%);
+}
+
+.disable {
+	opacity: 0.2;
+}

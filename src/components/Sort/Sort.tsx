@@ -2,12 +2,10 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 
 import styles from './Sort.module.scss';
+import { SortPropsType } from './types';
 
-const listOfSorts = ['популярности', 'по цене', 'по алфавиту'];
-
-export const Sort: React.FC = () => {
+export const Sort: React.FC<SortPropsType> = ({ sortList, sortBy, setSortBy }) => {
 	const [active, setActive] = useState<boolean>(false);
-	const [sortBy, setSortBy] = useState<string>(listOfSorts[0]);
 
 	return (
 		<div
@@ -17,11 +15,11 @@ export const Sort: React.FC = () => {
 		>
 			<div className={clsx(styles.sort__arrow, { [styles.sort__arrow_active]: active })}></div>
 			<span className={styles.sort__text}>Сортировка по:</span>
-			<span className={styles.sort__orange}>{sortBy}</span>
+			<span className={styles.sort__orange}>{sortBy.value}</span>
 
 			{active && (
 				<ul className={styles.sort__modal}>
-					{listOfSorts.map((sort, i) => (
+					{sortList.map((sort, i) => (
 						<li
 							key={`${sort}-${i}`}
 							className={clsx(styles.sort__item, {
@@ -29,7 +27,7 @@ export const Sort: React.FC = () => {
 							})}
 							onClick={() => setSortBy(sort)}
 						>
-							{sort}
+							{sort.value}
 						</li>
 					))}
 				</ul>

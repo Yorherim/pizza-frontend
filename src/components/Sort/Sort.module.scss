@@ -50,6 +50,10 @@
 	&__item {
 		padding: 10px 22px 10px 14px;
 
+		&:hover {
+			background: rgb(254 95 30 / 5%);
+		}
+
 		&_active {
 			color: #fe5f1e;
 			background: rgb(254 95 30 / 5%);
