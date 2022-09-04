@@ -1,12 +1,12 @@
 .header {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 35px 0;
 
 	.logo {
 		display: flex;
 		gap: 17px;
-		flex-grow: 1;
 
 		&__text {
 			display: flex;
@@ -43,6 +43,10 @@
 		font-weight: 700;
 		line-height: 19px;
 		gap: 13px;
+
+		&__left {
+			block-size: 16px;
+		}
 	}
 
 	.line {

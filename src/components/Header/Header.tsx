@@ -4,6 +4,7 @@ import styles from './Header.module.scss';
 
 import { Link } from 'react-router-dom';
 import { CartIcon, LogoIcon } from '../icons';
+import { Search } from '../Search/Search';
 
 export const Header: React.FC = () => {
 	return (
@@ -17,13 +18,11 @@ export const Header: React.FC = () => {
 							<span className={styles.logo__description}>самая вкусная пицца во вселенной</span>
 						</div>
 					</Link>
-
+					<Search />
 					<Link to="/cart" className={styles.button}>
 						<div className={styles.button__left}>520 ₽</div>
 						<div className={styles.line}></div>
-						<div className={styles.button__right}>
-							<CartIcon />
-						</div>
+						<CartIcon />
 					</Link>
 				</header>
 			</div>

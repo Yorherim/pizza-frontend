@@ -8,6 +8,8 @@
 	}
 
 	.pizzas {
+		margin-bottom: 35px;
+
 		&__wrapper {
 			display: flex;
 			flex-wrap: wrap;
@@ -25,6 +27,10 @@
 			font-size: 32px;
 			font-weight: 700;
 			line-height: 39px;
+		}
+
+		&__zeroText {
+			font-size: 25px;
 		}
 	}
 }

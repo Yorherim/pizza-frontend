@@ -1,0 +1,44 @@
+.pagination {
+	display: inline-flex;
+	gap: 10px;
+	font-size: 18px;
+	padding: 7px 10px;
+	border-radius: 5px;
+	min-height: 50px;
+
+	li {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+
+		a {
+			transition: 0.2s;
+			padding: 0 5px;
+			min-width: 30px;
+			min-height: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: rgb(255, 255, 255);
+			box-shadow: 1px 2px 4px rgb(0 0 0 / 4%);
+			border: 2px solid #eb5a1e;
+			border-radius: 5px;
+
+			&:hover {
+				background-color: #eb5a1e;
+				color: #fff;
+			}
+		}
+	}
+
+	:global {
+		.selected {
+			a {
+				min-width: 35px;
+				min-height: 35px;
+				font-size: 28px;
+			}
+		}
+	}
+}
