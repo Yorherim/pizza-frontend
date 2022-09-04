@@ -1,57 +1,49 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
-import ReactPaginate from 'react-paginate';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './Home.module.scss';
 
 import { Categories, Pizza, Sort, PizzaSkeleton, Pagination } from '../../components';
-import { PizzaType, SortByType } from './types';
-import { categoriesList, sortTitles } from '../../data';
+import { RootState } from '../../store/store';
+import { setPizzas, changeLoading } from '../../store/slices/pizza/pizza';
+import { changePagesCount } from '../../store/slices/filter-pizza/filter-pizza';
+import { PizzaType } from '../../store/slices/pizza/types';
 
 export const HomePage: React.FC = () => {
-	const [loading, setLoading] = useState<boolean>(false);
-	const [pizzas, setPizzas] = useState([] as PizzaType[]);
-	const [activeCategoryId, setActiveCategoryId] = useState<number>(0);
-	const [sortBy, setSortBy] = useState<SortByType>(sortTitles.rating);
-	const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
-	const [pagesCount, setPagesCount] = useState<number>(0);
+	const { pizzas, loading } = useSelector((state: RootState) => state.pizza);
+	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
+		(state: RootState) => state.filterPizza,
+	);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		setLoading(true);
+		dispatch(changeLoading(true));
 
 		// меняем desc на asc, если сортировка сделана по названию из-за особенностей апи
 		// то есть апи c sortBy=title&order=desc работает наоборот
 		const orderParam = sortBy.sort === 'title' ? 'asc' : 'desc';
 		const categoryParam = activeCategoryId !== 0 ? `category=${activeCategoryId}` : '';
 		const pageParam = currentPageIndex + 1;
+		const searchParam = search ? `&search=${search}` : '';
 
 		(async () => {
 			const pizzas: PizzaType[] = await (
 				await axios.get(
-					`${process.env.REACT_APP_API_URL}?${categoryParam}&page=${pageParam}&limit=4&sortBy=${sortBy.sort}&order=${orderParam}`,
+					`${process.env.REACT_APP_API_URL}?${categoryParam}&page=${pageParam}&limit=4&sortBy=${sortBy.sort}&order=${orderParam}${searchParam}`,
 				)
 			).data;
 
 			// бэкенд не присылает количество всех страниц, поэтому захардкодим
 			const pagesCount = Math.ceil(10 / 4);
 
-			setPagesCount(pagesCount);
-			setPizzas(pizzas);
-			setLoading(false);
+			dispatch(changePagesCount(pagesCount));
+			dispatch(setPizzas(pizzas));
+			dispatch(changeLoading(false));
 		})();
-	}, [activeCategoryId, sortBy, currentPageIndex]);
-
-	const options = {
-		sortList: useMemo(() => {
-			return Object.values(sortTitles);
-		}, []),
-		categories: useMemo(() => categoriesList, []),
-	};
-
-	const callbacks = {
-		changePage: useCallback((pageIndex: number) => setCurrentPageIndex(pageIndex), []),
-	};
+	}, [activeCategoryId, sortBy, currentPageIndex, search]);
 
 	const renders = {
 		pizzas: !pizzas.length ? (
@@ -66,12 +58,8 @@ export const HomePage: React.FC = () => {
 		<main className={styles.body}>
 			<div className="container">
 				<div className={clsx(styles.sorting)}>
-					<Categories
-						categories={options.categories}
-						activeCategoryId={activeCategoryId}
-						setActiveCategoryId={(id) => setActiveCategoryId(id)}
-					/>
-					<Sort sortList={options.sortList} sortBy={sortBy} setSortBy={setSortBy} />
+					<Categories />
+					<Sort />
 				</div>
 
 				<div className={styles.pizzas}>
@@ -81,7 +69,7 @@ export const HomePage: React.FC = () => {
 					</div>
 				</div>
 
-				<Pagination pagesCount={pagesCount} setCurrentPageIndex={callbacks.changePage} />
+				<Pagination />
 			</div>
 		</main>
 	);

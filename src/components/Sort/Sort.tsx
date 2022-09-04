@@ -1,10 +1,15 @@
 import clsx from 'clsx';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sortTitles } from '../../data';
+import { changeSortBy } from '../../store/slices/filter-pizza/filter-pizza';
+import { RootState } from '../../store/store';
 
 import styles from './Sort.module.scss';
-import { SortPropsType } from './types';
 
-export const Sort: React.FC<SortPropsType> = ({ sortList, sortBy, setSortBy }) => {
+const Sort: React.FC = () => {
+	const sortBy = useSelector((state: RootState) => state.filterPizza.sortBy);
+	const dispatch = useDispatch();
 	const [active, setActive] = useState<boolean>(false);
 
 	return (
@@ -19,13 +24,13 @@ export const Sort: React.FC<SortPropsType> = ({ sortList, sortBy, setSortBy }) =
 
 			{active && (
 				<ul className={styles.sort__modal}>
-					{sortList.map((sort, i) => (
+					{Object.values(sortTitles).map((sort, i) => (
 						<li
 							key={`${sort}-${i}`}
 							className={clsx(styles.sort__item, {
 								[styles.sort__item_active]: sortBy === sort,
 							})}
-							onClick={() => setSortBy(sort)}
+							onClick={() => dispatch(changeSortBy(sort))}
 						>
 							{sort.value}
 						</li>
@@ -35,3 +40,5 @@ export const Sort: React.FC<SortPropsType> = ({ sortList, sortBy, setSortBy }) =
 		</div>
 	);
 };
+
+export default React.memo(Sort);

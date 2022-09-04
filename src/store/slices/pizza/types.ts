@@ -7,7 +7,7 @@ export type PizzaType = {
 	imageUrl: string;
 };
 
-export type SortByType = {
-	sort: string;
-	value: string;
+export type PizzaStateType = {
+	pizzas: PizzaType[];
+	loading: boolean;
 };
