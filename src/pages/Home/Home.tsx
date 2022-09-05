@@ -24,16 +24,18 @@ export const HomePage: React.FC = () => {
 
 		// меняем desc на asc, если сортировка сделана по названию из-за особенностей апи
 		// то есть апи c sortBy=title&order=desc работает наоборот
-		const orderParam = sortBy.sort === 'title' ? 'asc' : 'desc';
+		const orderParam = `&order=${sortBy.sort === 'title' ? 'asc' : 'desc'}`;
 		const categoryParam = activeCategoryId !== 0 ? `category=${activeCategoryId}` : '';
-		const pageParam = currentPageIndex + 1;
+		const pageParam = `&page=${currentPageIndex + 1}`;
 		const searchParam = search ? `&search=${search}` : '';
+		const limitParam = `&limit=4`;
+		const sortByParam = `&sortBy=${sortBy.sort}`;
+
+		const params = categoryParam + pageParam + limitParam + sortByParam + orderParam + searchParam;
 
 		(async () => {
 			const pizzas: PizzaType[] = await (
-				await axios.get(
-					`${process.env.REACT_APP_API_URL}?${categoryParam}&page=${pageParam}&limit=4&sortBy=${sortBy.sort}&order=${orderParam}${searchParam}`,
-				)
+				await axios.get(`${process.env.REACT_APP_API_URL}?${params}`)
 			).data;
 
 			// бэкенд не присылает количество всех страниц, поэтому захардкодим
