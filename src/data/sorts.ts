@@ -1,4 +1,19 @@
-export const sortTitles = {
+type SortTitlesType = {
+	rating: {
+		sort: 'rating';
+		value: string;
+	};
+	price: {
+		sort: 'price';
+		value: string;
+	};
+	title: {
+		sort: 'title';
+		value: string;
+	};
+};
+
+export const sortTitles: SortTitlesType = {
 	rating: {
 		sort: 'rating',
 		value: 'популярности',

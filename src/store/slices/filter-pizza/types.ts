@@ -1,5 +1,7 @@
+export type SortType = 'rating' | 'price' | 'title';
+
 export type SortByType = {
-	sort: string;
+	sort: SortType;
 	value: string;
 };
 
@@ -9,4 +11,13 @@ export type FilterPizzaStateType = {
 	currentPageIndex: number;
 	pagesCount: number;
 	search: string;
+};
+
+export type QsParamsType = {
+	category?: string;
+	page: string;
+	limit: string;
+	sortBy: SortType;
+	order?: string;
+	search?: string;
 };

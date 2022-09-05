@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeCurrentPageIndex } from '../../store/slices/filter-pizza/filter-pizza';
+import { useSelector } from 'react-redux';
+import { useActions } from '../../hooks';
 import { RootState } from '../../store/store';
 
 import styles from './Pagination.module.scss';
 
 const Pagination: React.FC = () => {
-	const pagesCount = useSelector((state: RootState) => state.filterPizza.pagesCount);
-	const dispatch = useDispatch();
+	const { changeCurrentPageIndex } = useActions();
+	const { pagesCount, currentPageIndex } = useSelector((state: RootState) => state.filterPizza);
 
 	const callbacks = {
-		changePage: (pageIndex: number) => dispatch(changeCurrentPageIndex(pageIndex)),
+		changePage: (pageIndex: number) => changeCurrentPageIndex(pageIndex),
 	};
 
 	return (
@@ -25,6 +25,7 @@ const Pagination: React.FC = () => {
 			pageCount={pagesCount}
 			previousLabel="<"
 			renderOnZeroPageCount={() => null}
+			forcePage={currentPageIndex}
 		/>
 	);
 };

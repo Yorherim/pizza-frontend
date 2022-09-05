@@ -14,13 +14,12 @@ export const pizzaSlice = createSlice({
 		setPizzas: (state, action: PayloadAction<PizzaType[]>) => {
 			state.pizzas = action.payload;
 		},
-
 		changeLoading: (state, action: PayloadAction<boolean>) => {
 			state.loading = action.payload;
 		},
 	},
 });
 
-export const { setPizzas, changeLoading } = pizzaSlice.actions;
+export const pizzaActions = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

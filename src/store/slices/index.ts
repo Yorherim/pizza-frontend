@@ -1,4 +1,11 @@
-import pizzaReducer from './pizza/pizza';
-import filterPizzaReducer from './filter-pizza/filter-pizza';
+import pizzaReducer, { pizzaActions } from './pizza/pizza';
+import filterPizzaReducer, { filterPizzaActions } from './filter-pizza/filter-pizza';
+import appReducer, { appActions } from './app/app';
 
-export { pizzaReducer, filterPizzaReducer };
+const allActions = {
+	...pizzaActions,
+	...filterPizzaActions,
+	...appActions,
+};
+
+export { pizzaReducer, filterPizzaReducer, appReducer, allActions };

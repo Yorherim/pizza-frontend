@@ -1,51 +1,78 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import qs from 'qs';
 
 import styles from './Home.module.scss';
 
 import { Categories, Pizza, Sort, PizzaSkeleton, Pagination } from '../../components';
 import { RootState } from '../../store/store';
-import { setPizzas, changeLoading } from '../../store/slices/pizza/pizza';
-import { changePagesCount } from '../../store/slices/filter-pizza/filter-pizza';
 import { PizzaType } from '../../store/slices/pizza/types';
+import { useActions } from '../../hooks';
+import { QsParamsType } from '../../store/slices/filter-pizza/types';
 
 export const HomePage: React.FC = () => {
+	const { init, firstRender } = useSelector((state: RootState) => state.app);
 	const { pizzas, loading } = useSelector((state: RootState) => state.pizza);
 	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
 		(state: RootState) => state.filterPizza,
 	);
-
-	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const {
+		setPizzas,
+		changeLoading,
+		changePagesCount,
+		setUrlParams,
+		isInitialized,
+		cancelFirstRender,
+	} = useActions();
 
 	useEffect(() => {
-		dispatch(changeLoading(true));
+		if (window.location.search) {
+			const params = qs.parse(window.location.search.substring(1)) as QsParamsType;
+			setUrlParams(params);
+		}
+		isInitialized();
+	}, []);
 
-		// меняем desc на asc, если сортировка сделана по названию из-за особенностей апи
-		// то есть апи c sortBy=title&order=desc работает наоборот
-		const orderParam = `&order=${sortBy.sort === 'title' ? 'asc' : 'desc'}`;
-		const categoryParam = activeCategoryId !== 0 ? `category=${activeCategoryId}` : '';
-		const pageParam = `&page=${currentPageIndex + 1}`;
-		const searchParam = search ? `&search=${search}` : '';
-		const limitParam = `&limit=4`;
-		const sortByParam = `&sortBy=${sortBy.sort}`;
+	useEffect(() => {
+		if (init) {
+			changeLoading(true);
 
-		const params = categoryParam + pageParam + limitParam + sortByParam + orderParam + searchParam;
+			// меняем desc на asc, если сортировка сделана по названию из-за особенностей апи
+			// то есть апи c sortBy=title&order=desc работает наоборот
+			const orderParam = sortBy.sort === 'title' ? 'asc' : 'desc';
 
-		(async () => {
-			const pizzas: PizzaType[] = await (
-				await axios.get(`${process.env.REACT_APP_API_URL}?${params}`)
-			).data;
+			const qsParams = {} as QsParamsType;
+			if (activeCategoryId) qsParams.category = activeCategoryId.toString();
+			if (orderParam) qsParams.order = orderParam;
+			if (search) qsParams.search = search;
+			qsParams.limit = `4`;
+			qsParams.sortBy = sortBy.sort;
+			qsParams.page = (currentPageIndex + 1).toString();
 
-			// бэкенд не присылает количество всех страниц, поэтому захардкодим
-			const pagesCount = Math.ceil(10 / 4);
+			const queryString = qs.stringify(qsParams);
 
-			dispatch(changePagesCount(pagesCount));
-			dispatch(setPizzas(pizzas));
-			dispatch(changeLoading(false));
-		})();
-	}, [activeCategoryId, sortBy, currentPageIndex, search]);
+			// если это не первый рендер, то добавляем queryString в URL
+			if (!firstRender) navigate(`?${queryString}`);
+
+			(async () => {
+				const pizzas: PizzaType[] = await (
+					await axios.get(`${process.env.REACT_APP_API_URL}?${queryString}`)
+				).data;
+
+				// бэкенд не присылает количество всех страниц, поэтому захардкодим
+				const pagesCount = Math.ceil(10 / 4);
+
+				changePagesCount(pagesCount);
+				setPizzas(pizzas);
+				changeLoading(false);
+				cancelFirstRender();
+			})();
+		}
+	}, [activeCategoryId, sortBy, currentPageIndex, search, init]);
 
 	const renders = {
 		pizzas: !pizzas.length ? (

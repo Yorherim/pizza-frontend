@@ -1,23 +1,22 @@
 import clsx from 'clsx';
 import React, { useCallback, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import debounce from 'lodash.debounce';
 
-import { changeSearch } from '../../store/slices/filter-pizza/filter-pizza';
 import { ClearIcon, SearchIcon } from '../icons';
 
 import styles from './Search.module.scss';
+import { useActions } from '../../hooks';
 
 export const Search: React.FC = () => {
-	const dispatch = useDispatch();
+	const { changeSearch } = useActions();
 	const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const [inputValue, setInputValue] = useState<string>('');
 
 	const callbacks = {
 		debounce: useCallback(
 			debounce((value: string) => {
-				dispatch(changeSearch(value));
-			}, 750),
+				changeSearch(value);
+			}, 500),
 			[],
 		),
 		onChangeInput: (value: string) => {
@@ -26,7 +25,7 @@ export const Search: React.FC = () => {
 		},
 		clearInput: () => {
 			setInputValue('');
-			dispatch(changeSearch(''));
+			changeSearch('');
 			inputRef.current.focus();
 		},
 	};

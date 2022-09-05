@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { sortTitles } from '../../data';
-import { changeSortBy } from '../../store/slices/filter-pizza/filter-pizza';
+import { useActions } from '../../hooks';
 import { RootState } from '../../store/store';
 
 import styles from './Sort.module.scss';
 
 const Sort: React.FC = () => {
+	const { changeSortBy } = useActions();
 	const sortBy = useSelector((state: RootState) => state.filterPizza.sortBy);
-	const dispatch = useDispatch();
 	const [active, setActive] = useState<boolean>(false);
 
 	return (
@@ -30,7 +30,7 @@ const Sort: React.FC = () => {
 							className={clsx(styles.sort__item, {
 								[styles.sort__item_active]: sortBy === sort,
 							})}
-							onClick={() => dispatch(changeSortBy(sort))}
+							onClick={() => changeSortBy(sort)}
 						>
 							{sort.value}
 						</li>

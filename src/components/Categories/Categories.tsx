@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { categoriesList } from '../../data';
-import { changeActiveCategoryId } from '../../store/slices/filter-pizza/filter-pizza';
+import { useActions } from '../../hooks';
 import { RootState } from '../../store/store';
 
 import styles from './Categories.module.scss';
@@ -9,8 +9,8 @@ import styles from './Categories.module.scss';
 import { Category } from './Category/Category';
 
 const Categories: React.FC = () => {
+	const { changeActiveCategoryId } = useActions();
 	const activeCategoryId = useSelector((state: RootState) => state.filterPizza.activeCategoryId);
-	const dispatch = useDispatch();
 
 	return (
 		<div className={styles.categories}>
@@ -19,7 +19,7 @@ const Categories: React.FC = () => {
 					key={`${category}-${i}`}
 					title={category}
 					isActive={i === activeCategoryId}
-					setActive={() => dispatch(changeActiveCategoryId(i))}
+					setActive={() => changeActiveCategoryId(i)}
 				/>
 			))}
 		</div>
