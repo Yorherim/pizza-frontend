@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	init: false,
-	firstRender: true,
 };
 
 export const appSlice = createSlice({
@@ -11,9 +10,6 @@ export const appSlice = createSlice({
 	reducers: {
 		isInitialized: (state) => {
 			state.init = true;
-		},
-		cancelFirstRender: (state) => {
-			state.firstRender = false;
 		},
 	},
 });

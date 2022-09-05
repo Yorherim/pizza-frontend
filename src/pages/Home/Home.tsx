@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -10,24 +10,28 @@ import styles from './Home.module.scss';
 import { Categories, Pizza, Sort, PizzaSkeleton, Pagination } from '../../components';
 import { RootState } from '../../store/store';
 import { PizzaType } from '../../store/slices/pizza/types';
-import { useActions } from '../../hooks';
+import { useActions, useQueryString } from '../../hooks';
 import { QsParamsType } from '../../store/slices/filter-pizza/types';
 
 export const HomePage: React.FC = () => {
-	const { init, firstRender } = useSelector((state: RootState) => state.app);
+	const { init } = useSelector((state: RootState) => state.app);
 	const { pizzas, loading } = useSelector((state: RootState) => state.pizza);
 	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
 		(state: RootState) => state.filterPizza,
 	);
+	const { setPizzas, changeLoading, changePagesCount, setUrlParams, isInitialized } = useActions();
 	const navigate = useNavigate();
-	const {
-		setPizzas,
-		changeLoading,
-		changePagesCount,
-		setUrlParams,
-		isInitialized,
-		cancelFirstRender,
-	} = useActions();
+	const isFirstRender = useRef(true);
+	const queryString = useQueryString();
+
+	// отменяем при первом рендере изменение URL
+	useEffect(() => {
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+		} else {
+			navigate(`?${queryString}`);
+		}
+	}, []);
 
 	useEffect(() => {
 		if (window.location.search) {
@@ -40,23 +44,6 @@ export const HomePage: React.FC = () => {
 	useEffect(() => {
 		if (init) {
 			changeLoading(true);
-
-			// меняем desc на asc, если сортировка сделана по названию из-за особенностей апи
-			// то есть апи c sortBy=title&order=desc работает наоборот
-			const orderParam = sortBy.sort === 'title' ? 'asc' : 'desc';
-
-			const qsParams = {} as QsParamsType;
-			if (activeCategoryId) qsParams.category = activeCategoryId.toString();
-			if (orderParam) qsParams.order = orderParam;
-			if (search) qsParams.search = search;
-			qsParams.limit = `4`;
-			qsParams.sortBy = sortBy.sort;
-			qsParams.page = (currentPageIndex + 1).toString();
-
-			const queryString = qs.stringify(qsParams);
-
-			// если это не первый рендер, то добавляем queryString в URL
-			if (!firstRender) navigate(`?${queryString}`);
 
 			(async () => {
 				const pizzas: PizzaType[] = await (
