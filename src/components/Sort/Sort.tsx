@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { sortTitles } from '../../data';
 import { useActions } from '../../hooks';
@@ -11,11 +11,24 @@ const Sort: React.FC = () => {
 	const { changeSortBy } = useActions();
 	const sortBy = useSelector((state: RootState) => state.filterPizza.sortBy);
 	const [active, setActive] = useState<boolean>(false);
+	const sortRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (!e.composedPath().includes(sortRef.current)) {
+				setActive(false);
+			}
+		};
+		document.body.addEventListener('click', handleClickOutside);
+
+		return () => document.body.removeEventListener('click', handleClickOutside);
+	}, []);
 
 	return (
 		<div
 			className={styles.sort}
 			onClick={() => setActive(!active)}
+			ref={sortRef}
 			//onBlur={() => setActive(false)}
 		>
 			<div className={clsx(styles.sort__arrow, { [styles.sort__arrow_active]: active })}></div>

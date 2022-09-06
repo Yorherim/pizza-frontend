@@ -6,14 +6,7 @@ import { PizzaButton } from './PizzaButton/PizzaButton';
 import PizzaTab from './PizzaTab/PizzaTab';
 import { PizzaPropsType, PizzaSizesType } from './types';
 
-export const Pizza: React.FC<PizzaPropsType> = ({
-	imageUrl,
-	title,
-	widths,
-	sizes,
-	price,
-	count,
-}) => {
+export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes, price }) => {
 	const [activeWidth, setActiveWidth] = useState<number>(widths[0]);
 	const [activeSize, setActiveSize] = useState<PizzaSizesType>(sizes[0] as PizzaSizesType);
 
@@ -92,7 +85,7 @@ export const Pizza: React.FC<PizzaPropsType> = ({
 
 			<div className={styles.pizza__bottom}>
 				<span className={styles.pizza__prise}>{price} ₽</span>
-				<PizzaButton count={count} />
+				<PizzaButton count={0} />
 			</div>
 		</div>
 	);

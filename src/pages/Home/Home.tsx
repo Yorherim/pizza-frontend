@@ -31,7 +31,7 @@ export const HomePage: React.FC = () => {
 		} else {
 			navigate(`?${queryString}`);
 		}
-	}, []);
+	}, [activeCategoryId, sortBy, currentPageIndex, search]);
 
 	useEffect(() => {
 		if (window.location.search) {
@@ -56,7 +56,6 @@ export const HomePage: React.FC = () => {
 				changePagesCount(pagesCount);
 				setPizzas(pizzas);
 				changeLoading(false);
-				cancelFirstRender();
 			})();
 		}
 	}, [activeCategoryId, sortBy, currentPageIndex, search, init]);
