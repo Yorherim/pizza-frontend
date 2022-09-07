@@ -9,7 +9,9 @@ import styles from './Categories.module.scss';
 import { Category } from './Category/Category';
 
 const Categories: React.FC = () => {
-	const { changeActiveCategoryId } = useActions();
+	const {
+		filterPizza: { changeActiveCategoryId },
+	} = useActions();
 	const activeCategoryId = useSelector((state: RootState) => state.filterPizza.activeCategoryId);
 
 	return (

@@ -19,7 +19,11 @@ export const HomePage: React.FC = () => {
 	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
 		(state: RootState) => state.filterPizza,
 	);
-	const { setPizzas, changeLoading, changePagesCount, setUrlParams, isInitialized } = useActions();
+	const {
+		app: { isInitialized },
+		pizza: { changeLoading, setPizzas },
+		filterPizza: { changePagesCount, setUrlParams },
+	} = useActions();
 	const navigate = useNavigate();
 	const isFirstRender = useRef(true);
 	const queryString = useQueryString();

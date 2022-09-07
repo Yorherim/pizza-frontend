@@ -7,7 +7,9 @@ import { RootState } from '../../store/store';
 import styles from './Pagination.module.scss';
 
 const Pagination: React.FC = () => {
-	const { changeCurrentPageIndex } = useActions();
+	const {
+		filterPizza: { changeCurrentPageIndex },
+	} = useActions();
 	const { pagesCount, currentPageIndex } = useSelector((state: RootState) => state.filterPizza);
 
 	const callbacks = {

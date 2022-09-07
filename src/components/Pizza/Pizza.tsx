@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { useActions } from '../../hooks';
 
 import styles from './Pizza.module.scss';
 
@@ -9,6 +10,7 @@ import { PizzaPropsType, PizzaSizesType } from './types';
 export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes, price }) => {
 	const [activeWidth, setActiveWidth] = useState<number>(widths[0]);
 	const [activeSize, setActiveSize] = useState<PizzaSizesType>(sizes[0] as PizzaSizesType);
+	const {} = useActions();
 
 	const options = {
 		checkedSizes: useMemo(() => {
@@ -30,6 +32,7 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 		setActiveSize: useCallback((activeValue: PizzaSizesType) => {
 			setActiveSize(activeValue);
 		}, []),
+		addPizzaInCart: useCallback(() => {}, []),
 	};
 
 	return (

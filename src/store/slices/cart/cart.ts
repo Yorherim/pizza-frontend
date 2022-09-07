@@ -12,7 +12,7 @@ export const cartSlice = createSlice({
 	name: 'pizza',
 	initialState,
 	reducers: {
-		addPizza: (state, action: PayloadAction<Omit<PizzaCartType, 'count' | 'id'>>) => {
+		addPizzaInCart: (state, action: PayloadAction<Omit<PizzaCartType, 'count' | 'id'>>) => {
 			const findedPizza = state.pizzas.find((pizza) => {
 				return (
 					pizza.title === action.payload.title &&
@@ -31,19 +31,21 @@ export const cartSlice = createSlice({
 			state.totalCount += 1;
 		},
 
-		incrementPizza: (state, action: PayloadAction<string>) => {
+		incrementPizzaInCart: (state, action: PayloadAction<string>) => {
+			const pizzaCartId = action.payload;
 			const findedPizza = state.pizzas.find((pizza) => {
-				return pizza.id === action.payload;
+				return pizza.id === pizzaCartId;
 			});
 			findedPizza!.count += 1;
 			state.totalCount += 1;
 			state.totalPrice += findedPizza!.price;
 		},
 
-		decrementPizza: (state, action: PayloadAction<string>) => {
+		decrementPizzaInCart: (state, action: PayloadAction<string>) => {
+			const pizzaCartId = action.payload;
 			let pizzaIndex = null;
 			const findedPizza = state.pizzas.find((pizza, i) => {
-				if (pizza.id === action.payload) {
+				if (pizza.id === pizzaCartId) {
 					pizzaIndex = i;
 					return pizza;
 				}
@@ -57,10 +59,11 @@ export const cartSlice = createSlice({
 			state.totalPrice -= findedPizza!.price;
 		},
 
-		deletePizzasById: (state, action: PayloadAction<string>) => {
+		deletePizzasByIdInCart: (state, action: PayloadAction<string>) => {
+			const pizzaCartId = action.payload;
 			for (const pizza of state.pizzas) {
-				if (pizza.id === action.payload) {
-					state.pizzas = state.pizzas.filter((pizza) => pizza.id !== action.payload);
+				if (pizza.id === pizzaCartId) {
+					state.pizzas = state.pizzas.filter((pizza) => pizza.id !== pizzaCartId);
 					state.totalCount -= pizza.count;
 					state.totalPrice -= pizza.price * pizza.count;
 					break;
@@ -68,7 +71,7 @@ export const cartSlice = createSlice({
 			}
 		},
 
-		deleteAllPizzas: (state) => {
+		deleteAllPizzasInCart: (state) => {
 			state.pizzas = [];
 			state.totalCount = 0;
 			state.totalPrice = 0;

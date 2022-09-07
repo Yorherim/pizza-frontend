@@ -6,5 +6,12 @@ import { allActions } from '../store/slices';
 export const useActions = () => {
 	const dispatch = useDispatch();
 
-	return bindActionCreators(allActions, dispatch);
+	const { appActions, cartActions, filterPizzaActions, pizzaActions } = allActions;
+
+	return {
+		app: bindActionCreators(appActions, dispatch),
+		pizza: bindActionCreators(pizzaActions, dispatch),
+		cart: bindActionCreators(cartActions, dispatch),
+		filterPizza: bindActionCreators(filterPizzaActions, dispatch),
+	};
 };

@@ -8,7 +8,9 @@ import { RootState } from '../../store/store';
 import styles from './Sort.module.scss';
 
 const Sort: React.FC = () => {
-	const { changeSortBy } = useActions();
+	const {
+		filterPizza: { changeSortBy },
+	} = useActions();
 	const sortBy = useSelector((state: RootState) => state.filterPizza.sortBy);
 	const [active, setActive] = useState<boolean>(false);
 	const sortRef = useRef() as React.MutableRefObject<HTMLDivElement>;

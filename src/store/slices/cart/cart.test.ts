@@ -3,7 +3,13 @@ import { cartActions } from './cart';
 import { CartStateType, PizzaCartType } from './types';
 
 let state: CartStateType;
-const { addPizza, decrementPizza, deleteAllPizzas, deletePizzasById, incrementPizza } = cartActions;
+const {
+	addPizzaInCart: addPizza,
+	decrementPizzaInCart: decrementPizza,
+	deleteAllPizzasInCart: deleteAllPizzas,
+	deletePizzasByIdInCart: deletePizzasById,
+	incrementPizzaInCart: incrementPizza,
+} = cartActions;
 
 beforeEach(() => {
 	state = {

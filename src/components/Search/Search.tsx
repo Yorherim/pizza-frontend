@@ -8,7 +8,9 @@ import styles from './Search.module.scss';
 import { useActions } from '../../hooks';
 
 export const Search: React.FC = () => {
-	const { changeSearch } = useActions();
+	const {
+		filterPizza: { changeSearch },
+	} = useActions();
 	const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const [inputValue, setInputValue] = useState<string>('');
 
