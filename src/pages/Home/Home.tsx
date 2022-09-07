@@ -10,7 +10,7 @@ import styles from './Home.module.scss';
 import { Categories, Pizza, Sort, PizzaSkeleton, Pagination } from '../../components';
 import { RootState } from '../../store/store';
 import { PizzaType } from '../../store/slices/pizza/types';
-import { useActions, useQueryString } from '../../hooks';
+import { useActions, usePrevFilters, useQueryString } from '../../hooks';
 import { QsParamsType } from '../../store/slices/filter-pizza/types';
 
 export const HomePage: React.FC = () => {
@@ -31,6 +31,7 @@ export const HomePage: React.FC = () => {
 	const navigate = useNavigate();
 	const isFirstRender = useRef(true);
 	const queryString = useQueryString();
+	const { checkCurrentFiltersWithPrevFilteres } = usePrevFilters();
 
 	// отменяем при первом рендере изменение URL
 	useEffect(() => {
@@ -58,7 +59,15 @@ export const HomePage: React.FC = () => {
 					await axios.get(`${process.env.REACT_APP_API_URL}?${queryString}`)
 				).data;
 
-				if (!visitedPages[currentPageIndex]) {
+				if (
+					!visitedPages[currentPageIndex] ||
+					!checkCurrentFiltersWithPrevFilteres({
+						activeCategoryId,
+						sortBy,
+						currentPageIndex,
+						search,
+					})
+				) {
 					addIds(pizzas);
 					addVisitedPages(currentPageIndex);
 				}

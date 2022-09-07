@@ -1,6 +1,6 @@
-import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { CartStateType, IdsType, PizzaCartAddedType, PizzaCartType } from './types';
+import { CartStateType, IdsType, PizzaCartAddedType } from './types';
 import { PizzaType } from '../pizza/types';
 import { generateIdsForPizza } from '../../../utils/generate-ids-for-pizza';
 
@@ -63,7 +63,9 @@ export const cartSlice = createSlice({
 		addIds: (state, action: PayloadAction<PizzaType[]>) => {
 			const ids: IdsType = {};
 			action.payload.forEach((pizza) => {
-				ids[pizza.id] = generateIdsForPizza(pizza.widths, pizza.sizes);
+				if (!state.ids[pizza.id]) {
+					ids[pizza.id] = generateIdsForPizza(pizza.widths, pizza.sizes);
+				}
 			});
 			state.ids = { ...state.ids, ...ids };
 		},

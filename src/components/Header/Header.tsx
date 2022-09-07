@@ -5,10 +5,14 @@ import styles from './Header.module.scss';
 import { Link, useLocation } from 'react-router-dom';
 import { CartIcon, LogoIcon } from '../icons';
 import { Search } from '../Search/Search';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 export const Header: React.FC = () => {
 	const location = useLocation();
+	const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
 	const logoPath = window.location.search ? `/${window.location.search}` : '/';
+	const cartPage = window.location.pathname === '/cart';
 
 	return (
 		<>
@@ -21,9 +25,9 @@ export const Header: React.FC = () => {
 							<span className={styles.logo__description}>самая вкусная пицца во вселенной</span>
 						</div>
 					</Link>
-					<Search />
+					{!cartPage && <Search />}
 					<Link to="/cart" className={styles.button} state={{ from: location }}>
-						<div className={styles.button__left}>520 ₽</div>
+						<div className={styles.button__left}>{totalPrice} ₽</div>
 						<div className={styles.line}></div>
 						<CartIcon />
 					</Link>

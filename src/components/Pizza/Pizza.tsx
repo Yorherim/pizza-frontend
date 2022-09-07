@@ -1,10 +1,8 @@
-import { nanoid } from '@reduxjs/toolkit';
 import React, { useCallback, useMemo, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useActions } from '../../hooks';
-import { PizzaCartAddedType, PizzaCartType } from '../../store/slices/cart/types';
+import { PizzaCartType } from '../../store/slices/cart/types';
 import { RootState } from '../../store/store';
-import { generateIdsForPizza } from '../../utils/generate-ids-for-pizza';
 
 import styles from './Pizza.module.scss';
 
@@ -20,7 +18,6 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 	} = useActions();
 	const ids = useSelector((state: RootState) => state.cart.ids, shallowEqual);
 	const pizzaCartId = ids[id][activeSize.toString() + activeWidth.toString()];
-	console.log(pizzaCartId);
 	const count = useSelector((state: RootState) => state.cart.pizzas[pizzaCartId]?.count || 0);
 
 	const options = {

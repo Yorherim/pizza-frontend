@@ -3,33 +3,55 @@ import clsx from 'clsx';
 
 import styles from './PizzaCart.module.scss';
 
-import PizzaCheeseChiken from '../../assets/img/pizzas/cheese-chiken.png';
 import { MinusIcon, PlusIcon } from '../icons';
+import { useActions } from '../../hooks';
+import { PizzaCartPropsType } from './types';
 
-export const PizzaCart: React.FC = () => {
+const PizzaCart: React.FC<PizzaCartPropsType> = ({
+	imageUrl,
+	count,
+	price,
+	size,
+	title,
+	width,
+	id,
+}) => {
+	const {
+		cart: { incrementPizzaInCart, decrementPizzaInCart, deletePizzasByIdInCart },
+	} = useActions();
+
 	return (
 		<div className={styles.pizzaCart}>
 			<div className={styles.pizzaCart__body}>
 				<div className={styles.pizza}>
-					<img src={PizzaCheeseChiken} alt="pizza" className={styles.pizza__img} />
+					<img src={imageUrl} alt="pizza" className={styles.pizza__img} />
 					<div className={styles.pizza__text}>
-						<span className={styles.pizza__title}>Сырный цыпленок</span>
-						<span className={styles.pizza__description}>тонкое тесто, 26 см.</span>
+						<span className={styles.pizza__title}>{title}</span>
+						<span className={styles.pizza__description}>{`${width} тесто, ${size} см.`}</span>
 					</div>
 				</div>
 
 				<div className={styles.pizza__functions}>
 					<div className={styles.addButtons}>
-						<button className={clsx(styles.button, styles.addButtons__button)}>
+						<button
+							className={clsx(styles.button, styles.addButtons__button)}
+							onClick={() => decrementPizzaInCart(id)}
+						>
 							<MinusIcon />
 						</button>
-						Добавить
-						<button className={clsx(styles.button, styles.addButtons__button)}>
+						{count}
+						<button
+							className={clsx(styles.button, styles.addButtons__button)}
+							onClick={() => incrementPizzaInCart(id)}
+						>
 							<PlusIcon />
 						</button>
 					</div>
-					<span className={styles.price}>770 ₽</span>
-					<button className={clsx(styles.button, styles.clear)}>
+					<span className={styles.price}>{`${price} ₽`}</span>
+					<button
+						className={clsx(styles.button, styles.clear)}
+						onClick={() => deletePizzasByIdInCart(id)}
+					>
 						<PlusIcon />
 					</button>
 				</div>
@@ -37,3 +59,5 @@ export const PizzaCart: React.FC = () => {
 		</div>
 	);
 };
+
+export default React.memo(PizzaCart);
