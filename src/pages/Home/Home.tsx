@@ -19,11 +19,15 @@ export const HomePage: React.FC = () => {
 	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
 		(state: RootState) => state.filterPizza,
 	);
+	const visitedPages = useSelector((state: RootState) => state.cart.visitedPages);
+
 	const {
 		app: { isInitialized },
 		pizza: { changeLoading, setPizzas },
 		filterPizza: { changePagesCount, setUrlParams },
+		cart: { addIds, addVisitedPages },
 	} = useActions();
+
 	const navigate = useNavigate();
 	const isFirstRender = useRef(true);
 	const queryString = useQueryString();
@@ -53,6 +57,11 @@ export const HomePage: React.FC = () => {
 				const pizzas: PizzaType[] = await (
 					await axios.get(`${process.env.REACT_APP_API_URL}?${queryString}`)
 				).data;
+
+				if (!visitedPages[currentPageIndex]) {
+					addIds(pizzas);
+					addVisitedPages(currentPageIndex);
+				}
 
 				// бэкенд не присылает количество всех страниц, поэтому захардкодим
 				const pagesCount = Math.ceil(10 / 4);

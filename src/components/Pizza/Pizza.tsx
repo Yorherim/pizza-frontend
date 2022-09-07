@@ -1,5 +1,10 @@
+import { nanoid } from '@reduxjs/toolkit';
 import React, { useCallback, useMemo, useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useActions } from '../../hooks';
+import { PizzaCartAddedType, PizzaCartType } from '../../store/slices/cart/types';
+import { RootState } from '../../store/store';
+import { generateIdsForPizza } from '../../utils/generate-ids-for-pizza';
 
 import styles from './Pizza.module.scss';
 
@@ -7,10 +12,16 @@ import { PizzaButton } from './PizzaButton/PizzaButton';
 import PizzaTab from './PizzaTab/PizzaTab';
 import { PizzaPropsType, PizzaSizesType } from './types';
 
-export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes, price }) => {
+export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes, price, id }) => {
 	const [activeWidth, setActiveWidth] = useState<number>(widths[0]);
 	const [activeSize, setActiveSize] = useState<PizzaSizesType>(sizes[0] as PizzaSizesType);
-	const {} = useActions();
+	const {
+		cart: { addPizzaInCart },
+	} = useActions();
+	const ids = useSelector((state: RootState) => state.cart.ids, shallowEqual);
+	const pizzaCartId = ids[id][activeSize.toString() + activeWidth.toString()];
+	console.log(pizzaCartId);
+	const count = useSelector((state: RootState) => state.cart.pizzas[pizzaCartId]?.count || 0);
 
 	const options = {
 		checkedSizes: useMemo(() => {
@@ -32,7 +43,16 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 		setActiveSize: useCallback((activeValue: PizzaSizesType) => {
 			setActiveSize(activeValue);
 		}, []),
-		addPizzaInCart: useCallback(() => {}, []),
+		addPizzaInCart: useCallback(() => {
+			const pizza: Omit<PizzaCartType, 'count'> = {
+				imageUrl,
+				price,
+				title,
+				size: activeSize,
+				width: activeWidth === 0 ? 'тонкое' : 'традиционное',
+			};
+			addPizzaInCart({ pizza, pizzaCartId });
+		}, [activeSize, activeWidth]),
 	};
 
 	return (
@@ -88,7 +108,7 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 
 			<div className={styles.pizza__bottom}>
 				<span className={styles.pizza__prise}>{price} ₽</span>
-				<PizzaButton count={0} />
+				<PizzaButton count={count} addPizza={callbacks.addPizzaInCart} />
 			</div>
 		</div>
 	);

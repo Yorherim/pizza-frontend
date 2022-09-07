@@ -1,80 +1,76 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { CartStateType, PizzaCartType } from './types';
+import { CartStateType, IdsType, PizzaCartAddedType, PizzaCartType } from './types';
+import { PizzaType } from '../pizza/types';
+import { generateIdsForPizza } from '../../../utils/generate-ids-for-pizza';
 
 const initialState: CartStateType = {
-	pizzas: [],
+	pizzas: {},
 	totalCount: 0,
 	totalPrice: 0,
+	ids: {},
+	visitedPages: {},
 };
 
 export const cartSlice = createSlice({
 	name: 'pizza',
 	initialState,
 	reducers: {
-		addPizzaInCart: (state, action: PayloadAction<Omit<PizzaCartType, 'count' | 'id'>>) => {
-			const findedPizza = state.pizzas.find((pizza) => {
-				return (
-					pizza.title === action.payload.title &&
-					pizza.size === action.payload.size &&
-					pizza.width === action.payload.width
-				);
-			});
+		addPizzaInCart: (state, action: PayloadAction<PizzaCartAddedType>) => {
+			const { pizza, pizzaCartId } = action.payload;
 
-			if (findedPizza) {
-				findedPizza.count += 1;
+			if (state.pizzas[pizzaCartId]) {
+				state.pizzas[pizzaCartId].count += 1;
 			} else {
-				const pizza: PizzaCartType = { id: nanoid(), ...action.payload, count: 1 };
-				state.pizzas.push(pizza);
+				state.pizzas[pizzaCartId] = { ...pizza, count: 1 };
 			}
-			state.totalPrice += action.payload.price;
+			state.totalPrice += action.payload.pizza.price;
 			state.totalCount += 1;
 		},
 
 		incrementPizzaInCart: (state, action: PayloadAction<string>) => {
 			const pizzaCartId = action.payload;
-			const findedPizza = state.pizzas.find((pizza) => {
-				return pizza.id === pizzaCartId;
-			});
-			findedPizza!.count += 1;
+			state.pizzas[pizzaCartId].count += 1;
 			state.totalCount += 1;
-			state.totalPrice += findedPizza!.price;
+			state.totalPrice += state.pizzas[pizzaCartId].price;
 		},
 
 		decrementPizzaInCart: (state, action: PayloadAction<string>) => {
 			const pizzaCartId = action.payload;
-			let pizzaIndex = null;
-			const findedPizza = state.pizzas.find((pizza, i) => {
-				if (pizza.id === pizzaCartId) {
-					pizzaIndex = i;
-					return pizza;
-				}
-			});
 
-			findedPizza!.count -= 1;
-			if (findedPizza!.count === 0 && pizzaIndex !== null) {
-				state.pizzas = state.pizzas.filter((pizza) => pizza.id !== findedPizza!.id);
-			}
+			state.pizzas[pizzaCartId].count -= 1;
 			state.totalCount -= 1;
-			state.totalPrice -= findedPizza!.price;
+			state.totalPrice -= state.pizzas[pizzaCartId].price;
+			if (state.pizzas[pizzaCartId].count === 0) {
+				delete state.pizzas[pizzaCartId];
+			}
 		},
 
 		deletePizzasByIdInCart: (state, action: PayloadAction<string>) => {
 			const pizzaCartId = action.payload;
-			for (const pizza of state.pizzas) {
-				if (pizza.id === pizzaCartId) {
-					state.pizzas = state.pizzas.filter((pizza) => pizza.id !== pizzaCartId);
-					state.totalCount -= pizza.count;
-					state.totalPrice -= pizza.price * pizza.count;
-					break;
-				}
-			}
+			const pizzaInCart = state.pizzas[pizzaCartId];
+			state.totalCount -= pizzaInCart.count;
+			state.totalPrice -= pizzaInCart.price * pizzaInCart.count;
+			delete state.pizzas[pizzaCartId];
 		},
 
 		deleteAllPizzasInCart: (state) => {
-			state.pizzas = [];
+			state.pizzas = {};
 			state.totalCount = 0;
 			state.totalPrice = 0;
+		},
+
+		addIds: (state, action: PayloadAction<PizzaType[]>) => {
+			const ids: IdsType = {};
+			action.payload.forEach((pizza) => {
+				ids[pizza.id] = generateIdsForPizza(pizza.widths, pizza.sizes);
+			});
+			state.ids = { ...state.ids, ...ids };
+		},
+
+		addVisitedPages: (state, action: PayloadAction<number>) => {
+			const currentPageIndex = action.payload;
+			state.visitedPages[currentPageIndex] = true;
 		},
 	},
 });
