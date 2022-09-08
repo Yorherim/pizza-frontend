@@ -16,11 +16,19 @@ export const Cart: React.FC<CartPropsType> = () => {
 	const totalCount = useSelector((state: RootState) => state.cart.totalCount);
 	const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
 	const {
-		cart: { deleteAllPizzasInCart },
+		cart: { deleteAllPizzas },
 	} = useActions();
 
 	const options = {
 		pizzasKeys: Object.keys(pizzas),
+	};
+
+	const callbacks = {
+		deleteAllPizzas: () => {
+			if (window.confirm('Вы действительно хотите очистить корзину?')) {
+				deleteAllPizzas();
+			}
+		},
 	};
 
 	return (
@@ -31,7 +39,7 @@ export const Cart: React.FC<CartPropsType> = () => {
 					<h2 className={styles.cart__title}>Корзина</h2>
 				</div>
 
-				<div className={styles.cart__clear} onClick={() => deleteAllPizzasInCart()}>
+				<div className={styles.cart__clear} onClick={callbacks.deleteAllPizzas}>
 					<TrashIcon />
 					Очистить корзину
 				</div>
@@ -39,7 +47,14 @@ export const Cart: React.FC<CartPropsType> = () => {
 
 			<div className={styles.cart__pizzas}>
 				{Object.values(pizzas).map((pizza, i) => {
-					return <PizzaCart key={options.pizzasKeys[i]} {...pizza} id={options.pizzasKeys[i]} />;
+					return (
+						<PizzaCart
+							key={options.pizzasKeys[i]}
+							{...pizza}
+							id={options.pizzasKeys[i]}
+							price={pizza.count * pizza.price}
+						/>
+					);
 				})}
 			</div>
 

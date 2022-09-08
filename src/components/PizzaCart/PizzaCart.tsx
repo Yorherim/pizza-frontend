@@ -17,7 +17,7 @@ const PizzaCart: React.FC<PizzaCartPropsType> = ({
 	id,
 }) => {
 	const {
-		cart: { incrementPizzaInCart, decrementPizzaInCart, deletePizzasByIdInCart },
+		cart: { incrementPizza, decrementPizza, deletePizzasById },
 	} = useActions();
 
 	return (
@@ -35,14 +35,14 @@ const PizzaCart: React.FC<PizzaCartPropsType> = ({
 					<div className={styles.addButtons}>
 						<button
 							className={clsx(styles.button, styles.addButtons__button)}
-							onClick={() => decrementPizzaInCart(id)}
+							onClick={() => decrementPizza(id)}
 						>
 							<MinusIcon />
 						</button>
 						{count}
 						<button
 							className={clsx(styles.button, styles.addButtons__button)}
-							onClick={() => incrementPizzaInCart(id)}
+							onClick={() => incrementPizza(id)}
 						>
 							<PlusIcon />
 						</button>
@@ -50,7 +50,7 @@ const PizzaCart: React.FC<PizzaCartPropsType> = ({
 					<span className={styles.price}>{`${price} ₽`}</span>
 					<button
 						className={clsx(styles.button, styles.clear)}
-						onClick={() => deletePizzasByIdInCart(id)}
+						onClick={() => deletePizzasById(id)}
 					>
 						<PlusIcon />
 					</button>

@@ -13,10 +13,10 @@ const initialState: CartStateType = {
 };
 
 export const cartSlice = createSlice({
-	name: 'pizza',
+	name: 'cart',
 	initialState,
 	reducers: {
-		addPizzaInCart: (state, action: PayloadAction<PizzaCartAddedType>) => {
+		addPizza: (state, action: PayloadAction<PizzaCartAddedType>) => {
 			const { pizza, pizzaCartId } = action.payload;
 
 			if (state.pizzas[pizzaCartId]) {
@@ -28,14 +28,14 @@ export const cartSlice = createSlice({
 			state.totalCount += 1;
 		},
 
-		incrementPizzaInCart: (state, action: PayloadAction<string>) => {
+		incrementPizza: (state, action: PayloadAction<string>) => {
 			const pizzaCartId = action.payload;
 			state.pizzas[pizzaCartId].count += 1;
 			state.totalCount += 1;
 			state.totalPrice += state.pizzas[pizzaCartId].price;
 		},
 
-		decrementPizzaInCart: (state, action: PayloadAction<string>) => {
+		decrementPizza: (state, action: PayloadAction<string>) => {
 			const pizzaCartId = action.payload;
 
 			state.pizzas[pizzaCartId].count -= 1;
@@ -46,7 +46,7 @@ export const cartSlice = createSlice({
 			}
 		},
 
-		deletePizzasByIdInCart: (state, action: PayloadAction<string>) => {
+		deletePizzasById: (state, action: PayloadAction<string>) => {
 			const pizzaCartId = action.payload;
 			const pizzaInCart = state.pizzas[pizzaCartId];
 			state.totalCount -= pizzaInCart.count;
@@ -54,7 +54,7 @@ export const cartSlice = createSlice({
 			delete state.pizzas[pizzaCartId];
 		},
 
-		deleteAllPizzasInCart: (state) => {
+		deleteAllPizzas: (state) => {
 			state.pizzas = {};
 			state.totalCount = 0;
 			state.totalPrice = 0;

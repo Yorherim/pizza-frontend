@@ -14,7 +14,7 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 	const [activeWidth, setActiveWidth] = useState<number>(widths[0]);
 	const [activeSize, setActiveSize] = useState<PizzaSizesType>(sizes[0] as PizzaSizesType);
 	const {
-		cart: { addPizzaInCart },
+		cart: { addPizza },
 	} = useActions();
 	const ids = useSelector((state: RootState) => state.cart.ids, shallowEqual);
 	const pizzaCartId = ids[id][activeSize.toString() + activeWidth.toString()];
@@ -22,12 +22,12 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 
 	const options = {
 		checkedSizes: useMemo(() => {
-			const sizesObj = {} as { [key: string]: boolean };
+			const sizesObj = {} as Record<string, boolean>;
 			sizes.forEach((s) => (sizesObj[s] = true));
 			return sizesObj;
 		}, []),
 		checkedWidths: useMemo(() => {
-			const widthsObj = {} as { [key: string]: boolean };
+			const widthsObj = {} as Record<string, boolean>;
 			widths.forEach((w) => (widthsObj[w] = true));
 			return widthsObj;
 		}, []),
@@ -48,7 +48,7 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 				size: activeSize,
 				width: activeWidth === 0 ? 'тонкое' : 'традиционное',
 			};
-			addPizzaInCart({ pizza, pizzaCartId });
+			addPizza({ pizza, pizzaCartId });
 		}, [activeSize, activeWidth]),
 	};
 

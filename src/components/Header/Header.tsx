@@ -10,7 +10,7 @@ import { RootState } from '../../store/store';
 
 export const Header: React.FC = () => {
 	const location = useLocation();
-	const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
+	const { totalPrice, totalCount } = useSelector((state: RootState) => state.cart);
 	const logoPath = window.location.search ? `/${window.location.search}` : '/';
 	const cartPage = window.location.pathname === '/cart';
 
@@ -27,9 +27,14 @@ export const Header: React.FC = () => {
 					</Link>
 					{!cartPage && <Search />}
 					<Link to="/cart" className={styles.button} state={{ from: location }}>
-						<div className={styles.button__left}>{totalPrice} ₽</div>
+						<div className={styles.button__left}>
+							{totalPrice} <span>₽</span>
+						</div>
 						<div className={styles.line}></div>
-						<CartIcon />
+						<div className={styles.button__right}>
+							<CartIcon className={styles.svg} />
+							<span>{totalCount}</span>
+						</div>
 					</Link>
 				</header>
 			</div>

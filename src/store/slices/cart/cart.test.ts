@@ -5,13 +5,7 @@ import { CartStateType, PizzaCartType } from './types';
 
 let state: CartStateType;
 let pizzas: PizzaType[];
-const {
-	addPizzaInCart,
-	decrementPizzaInCart,
-	deleteAllPizzasInCart,
-	deletePizzasByIdInCart,
-	incrementPizzaInCart,
-} = cartActions;
+const { addPizza, decrementPizza, deleteAllPizzas, deletePizzasById, incrementPizza } = cartActions;
 
 beforeEach(() => {
 	state = {
@@ -96,7 +90,7 @@ test('should add pizza', () => {
 	};
 	const pizzaCartId = '3';
 
-	const newState = cartReducer(state, addPizzaInCart({ pizza, pizzaCartId }));
+	const newState = cartReducer(state, addPizza({ pizza, pizzaCartId }));
 
 	expect(Object.keys(newState.pizzas)).toHaveLength(3);
 	expect(newState.pizzas['3'].title).toBe('Новая пицца');
@@ -104,7 +98,7 @@ test('should add pizza', () => {
 	expect(newState.totalCount).toBe(5);
 	expect(newState.totalPrice).toBe(1550);
 
-	const newState2 = cartReducer(newState, addPizzaInCart({ pizza, pizzaCartId }));
+	const newState2 = cartReducer(newState, addPizza({ pizza, pizzaCartId }));
 
 	expect(Object.keys(newState2.pizzas)).toHaveLength(3);
 	expect(newState2.pizzas['3'].count).toBe(2);
@@ -113,7 +107,7 @@ test('should add pizza', () => {
 });
 
 test('should increment pizza', () => {
-	const newState = cartReducer(state, incrementPizzaInCart('1'));
+	const newState = cartReducer(state, incrementPizza('1'));
 
 	expect(newState.pizzas['1'].count).toBe(2);
 	expect(newState.totalCount).toBe(5);
@@ -121,19 +115,19 @@ test('should increment pizza', () => {
 });
 
 test('should decrement pizza', () => {
-	const newState = cartReducer(state, decrementPizzaInCart('2'));
+	const newState = cartReducer(state, decrementPizza('2'));
 
 	expect(newState.pizzas['2'].count).toBe(2);
 	expect(newState.totalCount).toBe(3);
 	expect(newState.totalPrice).toBe(1000);
 
-	const newState2 = cartReducer(newState, decrementPizzaInCart('1'));
+	const newState2 = cartReducer(newState, decrementPizza('1'));
 
 	expect(Object.values(newState2.pizzas)).toHaveLength(1);
 });
 
 test('should delete pizzas by id', () => {
-	const newState = cartReducer(state, deletePizzasByIdInCart('2'));
+	const newState = cartReducer(state, deletePizzasById('2'));
 
 	expect(Object.keys(newState.pizzas)).toHaveLength(1);
 	expect(newState.totalCount).toBe(1);
@@ -141,7 +135,7 @@ test('should delete pizzas by id', () => {
 });
 
 test('should delete all pizzas from cart', () => {
-	const newState = cartReducer(state, deleteAllPizzasInCart());
+	const newState = cartReducer(state, deleteAllPizzas());
 
 	expect(Object.keys(newState.pizzas)).toHaveLength(0);
 	expect(newState.totalCount).toBe(0);

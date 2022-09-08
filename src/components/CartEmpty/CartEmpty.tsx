@@ -15,7 +15,7 @@ export const CartEmpty: React.FC = () => {
 			<h2 className={styles.cartEmpty__title}>Корзина пустая 😕</h2>
 			<p className={styles.cartEmpty__text}>
 				Вероятней всего, вы не заказывали ещё пиццу.
-				<br /> Для того, чтобы заказать пиццу, перейди на главную страницу.
+				<br /> Для того, чтобы заказать пиццу, перейдите на главную страницу.
 			</p>
 			<img src={HumanImg} alt="human with empty cart" className={styles.cartEmpty__img} />
 			<Link to={fromPage} className={styles.cartEmpty__button}>

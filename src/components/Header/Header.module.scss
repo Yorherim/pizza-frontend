@@ -34,7 +34,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		max-height: 50px;
+		min-height: 50px;
 		padding: 12px 23px;
 		color: #fff;
 		border-radius: 30px;
@@ -46,6 +46,21 @@
 
 		&__left {
 			block-size: 16px;
+			display: flex;
+			flex-wrap: nowrap;
+
+			span {
+				margin-left: 5px;
+			}
+		}
+
+		&__right {
+			block-size: 16px;
+			display: flex;
+
+			.svg {
+				margin-right: 8px;
+			}
 		}
 	}
 
