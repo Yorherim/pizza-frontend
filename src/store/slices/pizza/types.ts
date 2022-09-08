@@ -9,7 +9,15 @@ export type PizzaType = {
 	rating: number;
 };
 
+export type StatusType = 'loading' | 'success' | 'rejected';
+
 export type PizzaStateType = {
 	pizzas: PizzaType[];
-	loading: boolean;
+	status: StatusType;
+};
+
+export type FetchPizzasActionPayloadType = {
+	queryString: string;
+	currentPageIndex: number;
+	checkCurrentFiltersWithPrevFilteres: boolean;
 };
