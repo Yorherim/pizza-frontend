@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { sortTitles } from '../data';
-import isEqual from 'lodash.isequal';
 
 import { SortByType } from '../store/slices/filter-pizza/types';
+import { shallowEqual } from 'react-redux';
 
 export type FiltersType = {
 	activeCategoryId: number;
@@ -38,7 +38,7 @@ export const usePrevFilters = () => {
 			setActiveCategoryId(filters.activeCategoryId);
 			flag = false;
 		}
-		if (!isEqual(sortBy, filters.sortBy)) {
+		if (!shallowEqual(sortBy, filters.sortBy)) {
 			setSortBy(filters.sortBy);
 			flag = false;
 		}

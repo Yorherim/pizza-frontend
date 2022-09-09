@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { PizzaCart } from '..';
 import { useActions } from '../../hooks';
-import { RootState } from '../../store/store';
+import { cartSelectors } from '../../store/slices';
 import { ArrowIcon, CartBlackIcon, TrashIcon } from '../icons';
 
 import styles from './Cart.module.scss';
@@ -12,9 +12,8 @@ import styles from './Cart.module.scss';
 type CartPropsType = {};
 
 export const Cart: React.FC<CartPropsType> = () => {
-	const pizzas = useSelector((state: RootState) => state.cart.pizzas);
-	const totalCount = useSelector((state: RootState) => state.cart.totalCount);
-	const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
+	const pizzas = useSelector(cartSelectors.selectPizzas);
+	const { totalCount, totalPrice } = useSelector(cartSelectors.selectCart);
 	const {
 		cart: { deleteAllPizzas },
 	} = useActions();

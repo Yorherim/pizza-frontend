@@ -6,13 +6,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { CartIcon, LogoIcon } from '../icons';
 import { Search } from '../Search/Search';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { cartSelectors } from '../../store/slices';
 
 export const Header: React.FC = () => {
 	const location = useLocation();
-	const { totalPrice, totalCount } = useSelector((state: RootState) => state.cart);
-	const logoPath = window.location.search ? `/${window.location.search}` : '/';
-	const cartPage = window.location.pathname === '/cart';
+	const { totalPrice, totalCount } = useSelector(cartSelectors.selectCart);
+	const cartPage = location.pathname === '/cart';
 
 	return (
 		<>

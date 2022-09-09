@@ -1,11 +1,12 @@
 import qs from 'qs';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { filterSelectors } from '../store/slices';
 import { QsParamsType } from '../store/slices/filter-pizza/types';
-import { RootState } from '../store/store';
 
 export const useQueryString = () => {
 	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
-		(state: RootState) => state.filterPizza,
+		filterSelectors.selectAllFilters,
+		shallowEqual,
 	);
 
 	// меняем desc на asc, если сортировка сделана по названию из-за особенностей апи

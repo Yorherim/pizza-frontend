@@ -21,7 +21,7 @@ export const pizzaThunks = {
 			const dispatch = thunkAPI.dispatch;
 
 			const pizzas: PizzaType[] = await (
-				await axios.get(`${process.env.REACT_APP_API_URL}?${queryString}`)
+				await axios.get(`${process.env.REACT_APP_API_URL}?${queryString}`, { timeout: 5000 })
 			).data;
 
 			if (!state.cart.visitedPages[currentPageIndex] || !checkCurrentFiltersWithPrevFilteres) {
@@ -31,9 +31,9 @@ export const pizzaThunks = {
 
 			// бэкенд не присылает количество всех страниц, поэтому захардкодим
 			const pagesCount = Math.ceil(10 / 4);
-
 			dispatch(filterPizzaActions.changePagesCount(pagesCount));
 
+			console.log('fetch pizzas thunk');
 			return pizzas;
 		},
 	),
@@ -62,6 +62,7 @@ export const pizzaSlice = createSlice({
 		builder.addCase(
 			pizzaThunks.fetchPizzas.fulfilled,
 			(state, action: PayloadAction<PizzaType[]>) => {
+				console.log('fullfiled');
 				state.pizzas = action.payload;
 				state.status = 'success';
 			},

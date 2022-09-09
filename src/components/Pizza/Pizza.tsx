@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useActions } from '../../hooks';
 import { PizzaCartType } from '../../store/slices/cart/types';
 import { RootState } from '../../store/store';
@@ -54,7 +55,9 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 
 	return (
 		<div className={styles.pizza}>
-			<img src={imageUrl} className={styles.pizza__img} />
+			<Link to={`/pizzas/${id}`}>
+				<img src={imageUrl} className={styles.pizza__img} />
+			</Link>
 			<span className={styles.pizza__title}>{title}</span>
 			<div className={styles.pizza__tabs}>
 				<div className={styles.pizza__box}>

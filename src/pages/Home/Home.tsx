@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
@@ -15,15 +15,26 @@ import {
 	PizzasZeroText,
 	PizzasRejectedFetch,
 } from '../../components';
-import { RootState } from '../../store/store';
 import { useActions, usePrevFilters, useQueryString, useThunks } from '../../hooks';
 import { QsParamsType } from '../../store/slices/filter-pizza/types';
+import { pizzaSelectors, filterSelectors, appSelectors } from '../../store/slices';
 
 export const HomePage: React.FC = () => {
-	const { init } = useSelector((state: RootState) => state.app);
-	const { pizzas, status } = useSelector((state: RootState) => state.pizza);
+	// 1 render - initialized
+	// 2 render - isInitialized() action
+	// 3 render - fetch pizzas
+	// 4 render - из-за особенностей работы с createAsyncThunk
+	// сначала срабатывает dispatch санки - стейт типо меняется из-за диспатча
+	// а затем срабатывает fulllfiled (если request.ok) и он меняет стейт
+
+	const init = useSelector(appSelectors.selectInit);
+	const pizzas = useSelector(pizzaSelectors.selectPizzas);
+	const status = useSelector(pizzaSelectors.selectStatus);
+
+	//const { pizzas, status } = useSelector(selectAllPizzaFields);
 	const { activeCategoryId, sortBy, currentPageIndex, search } = useSelector(
-		(state: RootState) => state.filterPizza,
+		filterSelectors.selectAllFilters,
+		shallowEqual,
 	);
 
 	const {
@@ -54,6 +65,7 @@ export const HomePage: React.FC = () => {
 			setUrlParams(params);
 		}
 		isInitialized();
+		console.log('isInitialized');
 	}, []);
 
 	useEffect(() => {
@@ -68,6 +80,7 @@ export const HomePage: React.FC = () => {
 					search,
 				}),
 			});
+			console.log('fetch pizzas');
 		}
 	}, [activeCategoryId, sortBy, currentPageIndex, search, init]);
 
