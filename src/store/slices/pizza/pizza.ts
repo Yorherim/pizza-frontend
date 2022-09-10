@@ -33,15 +33,23 @@ export const pizzaThunks = {
 			const pagesCount = Math.ceil(10 / 4);
 			dispatch(filterPizzaActions.changePagesCount(pagesCount));
 
-			console.log('fetch pizzas thunk');
 			return pizzas;
 		},
 	),
+
+	fetchPizzaById: createAsyncThunk('pizza/fetchPizzaById', async (pizzaId: string, thunkAPI) => {
+		const pizza: PizzaType = await (
+			await axios.get(`${process.env.REACT_APP_API_URL}/${pizzaId}`, { timeout: 5000 })
+		).data;
+
+		return pizza;
+	}),
 };
 
 const initialState: PizzaStateType = {
 	pizzas: [],
 	status: 'loading',
+	currentPizzaInfo: {} as PizzaType,
 };
 
 export const pizzaSlice = createSlice({
@@ -56,13 +64,13 @@ export const pizzaSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
+		// fetch pizzas
 		builder.addCase(pizzaThunks.fetchPizzas.pending, (state) => {
 			state.status = 'loading';
 		});
 		builder.addCase(
 			pizzaThunks.fetchPizzas.fulfilled,
 			(state, action: PayloadAction<PizzaType[]>) => {
-				console.log('fullfiled');
 				state.pizzas = action.payload;
 				state.status = 'success';
 			},
@@ -70,6 +78,22 @@ export const pizzaSlice = createSlice({
 		builder.addCase(pizzaThunks.fetchPizzas.rejected, (state) => {
 			state.status = 'rejected';
 			state.pizzas = [];
+		});
+
+		// fetch pizza
+		builder.addCase(pizzaThunks.fetchPizzaById.pending, (state) => {
+			state.status = 'loading';
+		});
+		builder.addCase(
+			pizzaThunks.fetchPizzaById.fulfilled,
+			(state, action: PayloadAction<PizzaType>) => {
+				state.currentPizzaInfo = action.payload;
+				state.status = 'success';
+			},
+		);
+		builder.addCase(pizzaThunks.fetchPizzaById.rejected, (state) => {
+			state.status = 'rejected';
+			state.currentPizzaInfo = {} as PizzaType;
 		});
 	},
 });

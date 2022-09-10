@@ -14,6 +14,7 @@ export type StatusType = 'loading' | 'success' | 'rejected';
 export type PizzaStateType = {
 	pizzas: PizzaType[];
 	status: StatusType;
+	currentPizzaInfo: PizzaType;
 };
 
 export type FetchPizzasActionPayloadType = {

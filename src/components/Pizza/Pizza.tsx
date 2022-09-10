@@ -57,8 +57,8 @@ export const Pizza: React.FC<PizzaPropsType> = ({ imageUrl, title, widths, sizes
 		<div className={styles.pizza}>
 			<Link to={`/pizzas/${id}`}>
 				<img src={imageUrl} className={styles.pizza__img} />
+				<span className={styles.pizza__title}>{title}</span>
 			</Link>
-			<span className={styles.pizza__title}>{title}</span>
 			<div className={styles.pizza__tabs}>
 				<div className={styles.pizza__box}>
 					<PizzaTab

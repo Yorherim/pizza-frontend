@@ -1,20 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
 import styles from './Home.module.scss';
 
-import {
-	Categories,
-	Pizza,
-	Sort,
-	PizzaSkeleton,
-	Pagination,
-	PizzasZeroText,
-	PizzasRejectedFetch,
-} from '../../components';
+import { Categories, Pizza, Sort, PizzaSkeleton, Pagination, NotFoundText } from '../../components';
 import { useActions, usePrevFilters, useQueryString, useThunks } from '../../hooks';
 import { QsParamsType } from '../../store/slices/filter-pizza/types';
 import { pizzaSelectors, filterSelectors, appSelectors } from '../../store/slices';
@@ -65,7 +57,6 @@ export const HomePage: React.FC = () => {
 			setUrlParams(params);
 		}
 		isInitialized();
-		console.log('isInitialized');
 	}, []);
 
 	useEffect(() => {
@@ -80,18 +71,22 @@ export const HomePage: React.FC = () => {
 					search,
 				}),
 			});
-			console.log('fetch pizzas');
 		}
 	}, [activeCategoryId, sortBy, currentPageIndex, search, init]);
 
 	const renders = {
 		pizzas: !pizzas.length ? (
-			<PizzasZeroText />
+			<NotFoundText title="К сожалению, таких пицц нет..." />
 		) : (
 			pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)
 		),
 		skeleton: [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />),
-		errorPizzas: <PizzasRejectedFetch />,
+		errorPizzas: (
+			<NotFoundText
+				title="Произошла ошибка"
+				text="К сожалению, не удалось загрузить пиццы. Попробуйте повторить попытку позже."
+			/>
+		),
 	};
 
 	return (

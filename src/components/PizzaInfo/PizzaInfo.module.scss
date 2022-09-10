@@ -1,0 +1,19 @@
+.pizzaInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.img {
+		max-width: 350px;
+		max-height: 350px;
+	}
+
+	.title {
+		font-size: 28px;
+		margin-bottom: 15px;
+	}
+
+	.price {
+		font-size: 18px;
+	}
+}
