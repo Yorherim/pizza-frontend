@@ -11,7 +11,7 @@ export const Search: React.FC = () => {
 	const {
 		filterPizza: { changeSearch },
 	} = useActions();
-	const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState<string>('');
 
 	const callbacks = {
@@ -21,14 +21,14 @@ export const Search: React.FC = () => {
 			}, 500),
 			[],
 		),
-		onChangeInput: (value: string) => {
-			setInputValue(value);
-			callbacks.debounce(value);
+		onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => {
+			setInputValue(e.currentTarget.value);
+			callbacks.debounce(e.currentTarget.value);
 		},
 		clearInput: () => {
 			setInputValue('');
 			changeSearch('');
-			inputRef.current.focus();
+			inputRef.current?.focus();
 		},
 	};
 
@@ -40,7 +40,7 @@ export const Search: React.FC = () => {
 				value={inputValue}
 				placeholder="Поиск пиццы..."
 				className={styles.input}
-				onChange={(e) => callbacks.onChangeInput(e.currentTarget.value)}
+				onChange={callbacks.onChangeInput}
 			/>
 			{inputValue && (
 				<ClearIcon
